@@ -15,7 +15,7 @@ from beamngpy.sensors import Damage
 
 sns.set()  # Make seaborn set matplotlib styling
 
-beamNGPAth= "C:/Users/marc/Desktop/BeamNG"
+beamNGPAth= "the BeamNG file path on your computer"
 # Instantiate a BeamNGpy instance the other classes use for reference & communication
 beamng = BeamNGpy('localhost', 64256, beamNGPAth)  # This is the host & port used to communicate over
 
