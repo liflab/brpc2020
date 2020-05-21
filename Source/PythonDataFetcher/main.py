@@ -2,6 +2,7 @@
 import datetime
 import time
 import sys
+import json
 import seaborn as sns
 from beamngpy import BeamNGpy, Vehicle, Scenario
 from beamngpy.sensors import Electrics
@@ -9,8 +10,7 @@ from beamngpy.sensors import Damage
 from VehicleData import VehicleData
 from BeamHome import getBeamngDirectory
 from ActualisationTime import getActualisationTime
-from DataPerSec import getDataRate
-from TestTime import getTestTime
+
 
 sns.set()  # Make seaborn set matplotlib styling
 
@@ -22,12 +22,12 @@ argsNumber=len(sys.argv)
 if argsNumber==3: #Command line execution
     testTime=int(sys.argv[1])#Time lenght of the test in seconds
     dataRate=int(sys.argv[2])#Number of data aquisition per second
-elif  argsNumber==1:#IDE execution
-    testTime=getTestTime()
-    dataRate=getDataRate()
-else:
-    print("Wrong number of arguments. This program takes 0 or 2 arguments")
 
+else:
+    print("Wrong number of arguments. This program takes only 2 arguments")
+
+print(str(testTime))
+print(str(dataRate))
 actualisationTime=getActualisationTime(dataRate)
 
 # Instantiate a BeamNGpy instance the other classes use for reference & communication
@@ -66,7 +66,6 @@ vehicle.ai_set_mode('disabled')
 vehicle.update_vehicle()
 sensors = bng.poll_sensors(vehicle)
 loopStartTime=datetime.datetime.now()
-
 for x in range(testTime*dataRate):
     loopIterationStartTime=time.time()
 
@@ -76,18 +75,17 @@ for x in range(testTime*dataRate):
 
     data=VehicleData(sensors['electrics']['values'],sensors['damage'],vehicle.state['pos'],
                      vehicle.state['dir'],sensors['electrics']['values']['steering']).getData()
-    print("TIME:", (datetime.datetime.now()-loopStartTime))
-    print(data,"\n")
+    print(str((datetime.datetime.now()-loopStartTime)))
+    print(json.dumps(data))
 
     loopExecTime=(time.time() - loopIterationStartTime)
 
     if(actualisationTime>loopExecTime):
         time.sleep(actualisationTime-loopExecTime)
 
+beamng.close()
 
 
 
 
-
-bng.close()
 

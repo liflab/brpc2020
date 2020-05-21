@@ -1,4 +1,5 @@
 import java.io.*;
+
 public class main {
     public static void main(String[] args)
     {
@@ -7,6 +8,7 @@ public class main {
             Process p =Runtime.getRuntime().exec(command);
             BufferedReader read= new BufferedReader(new InputStreamReader(p.getInputStream()));
             String pythonOuput=read.readLine();
+
             System.out.println(pythonOuput);
         }catch (Exception e){
 

@@ -6,6 +6,6 @@
 #
 #Return: beamngDir: the directory of BeamNG.research
 def getBeamngDirectory():
-    file=open("beamngDir.txt","r")
+    file=open("C:\\Users\\marc\\PycharmProjects\\brpc2020\Source\\PythonDataFetcher\\beamngDir.txt","r")
     beamngDir=file.read()
     return beamngDir
