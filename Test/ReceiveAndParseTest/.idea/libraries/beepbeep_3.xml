@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="beepbeep-3">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/src/beepbeep-3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/src/json.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
