@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="37bdbc79-13d4-430b-b97c-9518a2c2ede0" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/brpc2020.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/PythonDataFetcher.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ArgumentTest/.idea/ArgumentTest.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ArgumentTest/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ArgumentTest/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ArgumentTest/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ArgumentTest/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ArgumentTest/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ModuleTest/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ModuleTest/.idea/ModuleTest.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ModuleTest/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ModuleTest/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ModuleTest/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ModuleTest/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/project-template.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest2/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest2/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest2/.idea/libraries/json_20140107.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest2/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest2/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest2/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest3/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest3/.idea/OutputRedirectionTest3.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest3/.idea/inspectionProfiles/profiles_settings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest3/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest3/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest3/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest4/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest4/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest4/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/OutputRedirectionTest4/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/.idea/libraries/beepbeep_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/out/production/ReceiveAndParseTest/ReceiveAndParse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/out/production/ReceiveAndParseTest/beepbeep-3.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/ReceiveAndParseTest/out/production/ReceiveAndParseTest/json.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/jsonParseTest/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/jsonParseTest/.idea/libraries/beepbeep_3.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/jsonParseTest/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/jsonParseTest/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/jsonParseTest/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/jsonParseTest/out/production/jsonParseTest/parse.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/description.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/project-template.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../Test/untitled/.idea/vcs.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1cPQhgjh3eMw4UWZgZSlVOgOQjO" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.general" />
+  </component>
+  <component name="RunManager">
+    <configuration name="PythonDataFetcher" type="PythonConfigurationType" factoryName="Python" nameIsGenerated="true">
+      <module name="PythonDataFetcher" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\julie\AppData\Local\Programs\Python\Python38\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../.." />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="PythonConfigurationType" factoryName="Python">
+      <module name="PythonDataFetcher" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="C:\Users\julie\PycharmProjects\brpc\venv\Scripts\python.exe" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/../.." />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="37bdbc79-13d4-430b-b97c-9518a2c2ede0" name="Default Changelist" comment="" />
+      <created>1590427868912</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1590427868912</updated>
+      <workItem from="1590427870034" duration="234000" />
+      <workItem from="1590524588264" duration="143000" />
+      <workItem from="1590525194347" duration="520000" />
+      <workItem from="1590525878624" duration="1863000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="2282" y="181" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1590526128283">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state x="414" y="175" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.11.1680.1010@0.0.1920.1040" timestamp="1590524693347" />
+    <state x="2282" y="181" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590526128283" />
+    <state x="2568" y="278" key="FileChooserDialogImpl" timestamp="1590528848002">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state x="740" y="275" key="FileChooserDialogImpl/0.0.1920.1040/1920.11.1680.1010@0.0.1920.1040" timestamp="1590524729178" />
+    <state x="2568" y="278" key="FileChooserDialogImpl/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590528848002" />
+    <state width="1637" height="272" key="GridCell.Tab.0.bottom" timestamp="1590528849499">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.11.1680.1010@0.0.1920.1040" timestamp="1590524730479" />
+    <state width="1637" height="272" key="GridCell.Tab.0.bottom/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590528849499" />
+    <state width="1637" height="272" key="GridCell.Tab.0.center" timestamp="1590528849499">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.center/0.0.1920.1040/1920.11.1680.1010@0.0.1920.1040" timestamp="1590524730479" />
+    <state width="1637" height="272" key="GridCell.Tab.0.center/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590528849499" />
+    <state width="1637" height="272" key="GridCell.Tab.0.left" timestamp="1590528849499">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.left/0.0.1920.1040/1920.11.1680.1010@0.0.1920.1040" timestamp="1590524730479" />
+    <state width="1637" height="272" key="GridCell.Tab.0.left/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590528849499" />
+    <state width="1637" height="272" key="GridCell.Tab.0.right" timestamp="1590528849499">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state width="1877" height="282" key="GridCell.Tab.0.right/0.0.1920.1040/1920.11.1680.1010@0.0.1920.1040" timestamp="1590524730479" />
+    <state width="1637" height="272" key="GridCell.Tab.0.right/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590528849499" />
+    <state x="2261" y="161" key="SettingsEditor" timestamp="1590525704506">
+      <screen x="1920" y="11" width="1680" height="1010" />
+    </state>
+    <state x="2261" y="161" key="SettingsEditor/0.0.1920.1040/1920.11.1680.1010@1920.11.1680.1010" timestamp="1590525704506" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/PythonDataFetcher$PythonDataFetcher.coverage" NAME="PythonDataFetcher Coverage Results" MODIFIED="1590525890842" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../.." />
+  </component>
+</project>
