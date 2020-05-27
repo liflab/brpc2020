@@ -35,7 +35,7 @@ beamng = BeamNGpy('localhost', 64256, beamNGPAth)  # This is the host & port use
 
 # Create a vehile instance that will be called 'ego' in the simulation
 # using the etk800 model the simulator ships with
-vehicle = Vehicle('ego', model='etkc', licence='LIFLAB', colour='Blue')
+vehicle = Vehicle('LIFMobile', model='etkc', licence='LIFLAB', colour='Blue')
 
 # Create an Electrics sensor and attach it to the vehicle
 electrics = Electrics()
@@ -46,12 +46,12 @@ damage = Damage()
 vehicle.attach_sensor('damage',damage)
 
 # Create a scenario called vehicle_state taking place in the gridmap map the simulator ships with
-scenario = Scenario('gridmap', 'vehicle_state')
+scenario = Scenario('gridmap', 'LIF_TEST')
 # Add the vehicle and specify that it should start at a certain position and orientation.
 # The position & orientation values were obtained by opening the level in the simulator,
 # hitting F11 to open the editor and look for a spot to spawn and simply noting down the
 # corresponding values.
-scenario.add_vehicle(vehicle, pos=(0.0, 0, 0), rot=(0, 0, 45))  # 45 degree rotation around the z-axis
+scenario.add_vehicle(vehicle, pos=(0, 0, 0), rot=(0, 0, 45))  # 45 degree rotation around the z-axis
 
 # The make function of a scneario is used to compile the scenario and produce a scenario file the simulator can load
 scenario.make(beamng)
