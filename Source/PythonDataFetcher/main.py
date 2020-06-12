@@ -10,21 +10,26 @@ from beamngpy.sensors import Damage
 from VehicleData import VehicleData
 from BeamHome import getBeamngDirectory
 from ActualisationTime import getActualisationTime
+from debug import  isdebugging
 
 
 sns.set()  # Make seaborn set matplotlib styling
 
 beamNGPAth= getBeamngDirectory()
-testTime=0
-dataRate=0
-argsNumber=len(sys.argv)
+testTime=None
+dataRate=None
 
-if argsNumber==3: #Command line execution
+#if debug mode
+if (isdebugging()==True):
+    testTime=int(input("Enter the time lenght of the data aquisition (in seconds):"))
+    dataRate=int(input("Enter the number of data aquisition per second:"))
+
+#if normal mode with the right number of arguments
+elif len(sys.argv)==3: #Command line execution
     testTime=int(sys.argv[1])#Time lenght of the test in seconds
     dataRate=int(sys.argv[2])#Number of data aquisition per second
-
 else:
-    print("Wrong number of arguments. This program takes only 2 arguments")
+    raise Exception('Wrong number of arguments. This program takes 2 arguments and it received the following number of argument: {}.'.format(len(sys.argv)-1))
 
 print(str(testTime))
 print(str(dataRate))
@@ -33,9 +38,9 @@ actualisationTime=getActualisationTime(dataRate)
 # Instantiate a BeamNGpy instance the other classes use for reference & communication
 beamng = BeamNGpy('localhost', 64256, beamNGPAth)  # This is the host & port used to communicate over
 
-# Create a vehile instance that will be called 'ego' in the simulation
-# using the etk800 model the simulator ships with
-vehicle = Vehicle('LIFMobile', model='etkc', licence='LIFLAB', colour='Blue')
+# Create a blue vehicle instance that will be called 'LIF Mobile' in the simulation
+# using the etkc model the simulator ships with 'LIFLAB' licence plate
+vehicle = Vehicle('LIF_Mobile', model='etkc', licence='LIFLAB', colour='Blue')
 
 # Create an Electrics sensor and attach it to the vehicle
 electrics = Electrics()
@@ -45,14 +50,14 @@ vehicle.attach_sensor('electrics', electrics)
 damage = Damage()
 vehicle.attach_sensor('damage',damage)
 
-# Create a scenario called vehicle_state taking place in the gridmap map the simulator ships with
+# Create a scenario called 'LIF TEST' taking place in the gridmap map the simulator ships with
 scenario = Scenario('gridmap', 'LIF_TEST')
 # Add the vehicle and specify that it should start at a certain position and orientation.
 # The position & orientation values were obtained by opening the level in the simulator,
 # hitting F11 to open the editor and look for a spot to spawn and simply noting down the
 # corresponding values.
 scenario.add_vehicle(vehicle, pos=(0, 0, 0), rot=(0, 0, 45))  # 45 degree rotation around the z-axis
-
+print()
 # The make function of a scneario is used to compile the scenario and produce a scenario file the simulator can load
 scenario.make(beamng)
 
@@ -62,10 +67,17 @@ bng.load_scenario(scenario)
 bng.start_scenario()  # After loading, the simulator waits for further input to actually start
 
 
+
 vehicle.ai_set_mode('disabled')
 vehicle.update_vehicle()
 sensors = bng.poll_sensors(vehicle)
+
+
+data=VehicleData(sensors['electrics']['values'],sensors['damage'],vehicle.state['pos'],
+                     vehicle.state['dir'],sensors['electrics']['values']['steering'],).getData()
+data = {'time': "0:00:00.0000", 'data': data}
 loopStartTime=datetime.datetime.now()
+print(data)
 for x in range(testTime*dataRate):
     loopIterationStartTime=time.time()
 
@@ -74,8 +86,8 @@ for x in range(testTime*dataRate):
 
 
     data=VehicleData(sensors['electrics']['values'],sensors['damage'],vehicle.state['pos'],
-                     vehicle.state['dir'],sensors['electrics']['values']['steering']).getData()
-    data={'time':str(datetime.datetime.now()-loopStartTime),'data':data}
+                     vehicle.state['dir'],sensors['electrics']['values']['steering'],).getData()
+    data={'time':str(((datetime.datetime.now()-loopStartTime))),'data':data}
 
     print(json.dumps(data))
 
