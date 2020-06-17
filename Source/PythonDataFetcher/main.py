@@ -5,6 +5,7 @@ import sys
 import json
 import seaborn as sns
 from beamngpy import BeamNGpy, Vehicle, Scenario
+from beamngpy.sensors import GForces
 from beamngpy.sensors import Electrics
 from beamngpy.sensors import Damage
 from VehicleData import VehicleData
@@ -50,6 +51,11 @@ vehicle.attach_sensor('electrics', electrics)
 damage = Damage()
 vehicle.attach_sensor('damage',damage)
 
+#Create a Gforce sensor and attach it to the vehicle if module is selected
+gForce=GForces()
+vehicle.attach_sensor('GForces',gForce)
+
+
 # Create a scenario called 'LIF TEST' taking place in the gridmap map the simulator ships with
 scenario = Scenario('gridmap', 'LIF_TEST')
 # Add the vehicle and specify that it should start at a certain position and orientation.
@@ -73,11 +79,7 @@ vehicle.update_vehicle()
 sensors = bng.poll_sensors(vehicle)
 
 
-data=VehicleData(sensors['electrics']['values'],sensors['damage'],vehicle.state['pos'],
-                     vehicle.state['dir'],sensors['electrics']['values']['steering'],).getData()
-data = {'time': "0:00:00.0000", 'data': data}
 loopStartTime=datetime.datetime.now()
-print(data)
 for x in range(testTime*dataRate):
     loopIterationStartTime=time.time()
 
@@ -85,7 +87,7 @@ for x in range(testTime*dataRate):
     sensors = bng.poll_sensors(vehicle)  # Polls the data of all sensors attached to the vehicle
 
 
-    data=VehicleData(sensors['electrics']['values'],sensors['damage'],vehicle.state['pos'],
+    data=VehicleData(sensors['electrics']['values'],sensors['damage'],sensors['GForces'],vehicle.state['pos'],
                      vehicle.state['dir'],sensors['electrics']['values']['steering'],).getData()
     data={'time':str(((datetime.datetime.now()-loopStartTime))),'data':data}
 

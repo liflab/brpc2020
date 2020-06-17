@@ -5,27 +5,22 @@
 #Parameters:
 #electricSensorData: A dictionary containing the data of the electric sensor.
 #damageSensorData: A dictionary containing the data of the damage sensor.
+#gForces: A dictionnary containing the data related to the G Forces.
 #position: A list containing the coordinates x,y,z of the vehicle's position.
 #direction: A list containing the x,y and z parameters of the vehicle's position.
 #steering: The rotation degree of the steering wheel.
 
 
+
 class VehicleData:
-    def __init__(self, electricSensorData,damageSensorData,position,direction,steering):
-        if len(electricSensorData)!=0:
-            self.__engineData=self.__setEngine(electricSensorData)
-            self.__fluidsData=self.__setFluids(electricSensorData)
-            self.__transmissionData=self.__setTransmission(electricSensorData)
-            self.__brakesData=self.__setBrakes(electricSensorData)
-            self.__lightsData=self.__setLights(electricSensorData)
+    def __init__(self, electricSensorData,damageSensorData,gForces,position,direction,steering):
 
-        else:
-            self.__engineData={}
-            self.__fluidsData={}
-            self.__transmissionData={}
-            self.__brakesData={}
-            self.__lightsData={}
-
+        self.__engineData=self.__setEngine(electricSensorData)
+        self.__fluidsData=self.__setFluids(electricSensorData)
+        self.__transmissionData=self.__setTransmission(electricSensorData)
+        self.__brakesData=self.__setBrakes(electricSensorData)
+        self.__lightsData=self.__setLights(electricSensorData)
+        self.__gForcesData=gForces
         self.__carDamageData=damageSensorData
         self.__positionAndDirectionData=self.__setPositionAndDirection(position,direction,steering)
 
@@ -130,6 +125,7 @@ class VehicleData:
               'transmission':self.__transmissionData,
               'brakes':self.__brakesData,
               'lights':self.__lightsData,
+              'gforce': self.__gForcesData,
               'damage':self.__carDamageData,
               'position and direction': self.__positionAndDirectionData}
 

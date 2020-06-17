@@ -123,7 +123,7 @@ public class MaxSpeedAndAngle {
 
     public static void Angle(){
 
-
+            System.out.println(Math.toDegrees(Math.atan(0.5/(-1*((Math.sqrt(3))/2)))));
             QueueSource xSource=new QueueSource();
             QueueSource ySource=new QueueSource();
             xSource.setEvents(7,7,7,7,7);
