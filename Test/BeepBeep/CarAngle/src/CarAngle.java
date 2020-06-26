@@ -14,7 +14,7 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
-import ca.uqac.lif.mtnp.plot.gral.Scatterplot;
+import ca.uqac.lif.mtnp.plot.gnuplot.Scatterplot;
 
 import java.io.InputStream;
 
