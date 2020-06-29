@@ -32,21 +32,19 @@ public class Check {
         Constant xPosCheck=new Constant(xPosInput);
         Constant yPosCheck=new Constant(yPosInput);
 
-        FunctionTree checkX=new FunctionTree(new onePosCheck(),xPosCheck, StreamVariable.X);
-        FunctionTree checkY=new FunctionTree(new onePosCheck(),yPosCheck,StreamVariable.X);
-        FunctionTree posCheck=new FunctionTree(new twoPosCheck(),StreamVariable.X,StreamVariable.Y);
 
-        ApplyFunction xPosCheckAF=new ApplyFunction(checkX);
-        ApplyFunction yPosCheckAF=new ApplyFunction(checkY);
-        ApplyFunction posCheckAF=new ApplyFunction(posCheck);
+        FunctionTree positionCheck=new FunctionTree(new PositionCheck(),xPosCheck,yPosCheck,StreamVariable.X,StreamVariable.Y);
 
-        Connector.connect(xPosSource,xPosCheckAF);
-        Connector.connect(yPosSource,yPosCheckAF);
-        Connector.connect(xPosCheckAF,0,posCheckAF,0);
-        Connector.connect(yPosCheckAF,0,posCheckAF,1);
+
+        ApplyFunction positionCheckAF=new ApplyFunction(positionCheck);
+
+
+        Connector.connect(xPosSource,0,positionCheckAF,0);
+        Connector.connect(yPosSource,0,positionCheckAF,1);
+
 
         int trueCounter=0;
-        Pullable posCheckPull=posCheckAF.getPullableOutput();
+        Pullable posCheckPull=positionCheckAF.getPullableOutput();
 
         while(readp.hasNext()){
             String dictionnary =String.valueOf(readp.pull());
