@@ -1,6 +1,9 @@
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.ApplyFunction;
+import ca.uqac.lif.cep.functions.Constant;
+import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.json.JPathFunction;
 import ca.uqac.lif.cep.json.ParseJson;
@@ -15,32 +18,35 @@ public class Check {
     public static void main(String[] args){
         Scanner userInput=new Scanner(System.in);
         System.out.print("Enter the X position to check: ");
-        int xPosToCheck=userInput.nextInt();
+        int xPosInput=userInput.nextInt();
         System.out.print("Enter the Y position to check: ");
-        int yPosToCheck=userInput.nextInt();
+        int yPosInput=userInput.nextInt();
 
         InputStream is= Check.class.getResourceAsStream("dictionnary.txt");
         ReadLines read=new ReadLines(is);
         Pullable readp=read.getPullableOutput();
 
-        QueueSource xRefPosSource=new QueueSource();
-        QueueSource yRefPosSource=new QueueSource();
+
         QueueSource xPosSource=new QueueSource();
         QueueSource yPosSource=new QueueSource();
+        Constant xPosCheck=new Constant(xPosInput);
+        Constant yPosCheck=new Constant(yPosInput);
 
-        ApplyFunction xPosCheck=new ApplyFunction(new onePosCheck());
-        ApplyFunction yPosCheck=new ApplyFunction(new onePosCheck());
-        ApplyFunction posCheck=new ApplyFunction(new twoPosCheck());
+        FunctionTree checkX=new FunctionTree(new onePosCheck(),xPosCheck, StreamVariable.X);
+        FunctionTree checkY=new FunctionTree(new onePosCheck(),yPosCheck,StreamVariable.X);
+        FunctionTree posCheck=new FunctionTree(new twoPosCheck(),StreamVariable.X,StreamVariable.Y);
 
-        Connector.connect(xRefPosSource,0,xPosCheck,0);
-        Connector.connect(xPosSource,0,xPosCheck,1);
-        Connector.connect(yRefPosSource,0,yPosCheck,0);
-        Connector.connect(yPosSource,0,yPosCheck,1);
-        Connector.connect(xPosCheck,0,posCheck,0);
-        Connector.connect(yPosCheck,0,posCheck,1);
+        ApplyFunction xPosCheckAF=new ApplyFunction(checkX);
+        ApplyFunction yPosCheckAF=new ApplyFunction(checkY);
+        ApplyFunction posCheckAF=new ApplyFunction(posCheck);
+
+        Connector.connect(xPosSource,xPosCheckAF);
+        Connector.connect(yPosSource,yPosCheckAF);
+        Connector.connect(xPosCheckAF,0,posCheckAF,0);
+        Connector.connect(yPosCheckAF,0,posCheckAF,1);
 
         int trueCounter=0;
-        Pullable posCheckPull=posCheck.getPullableOutput();
+        Pullable posCheckPull=posCheckAF.getPullableOutput();
 
         while(readp.hasNext()){
             String dictionnary =String.valueOf(readp.pull());
@@ -51,8 +57,7 @@ public class Check {
 
             xPosSource.addEvent(Math.round(( ((Number) getData(getSubDict(getSubDict(getSubDict(jMap,"data"),"position and direction"),"position"),"x")).floatValue())));
             yPosSource.addEvent(Math.round(( ((Number) getData(getSubDict(getSubDict(getSubDict(jMap,"data"),"position and direction"),"position"),"y")).floatValue())));
-            xRefPosSource.addEvent(xPosToCheck);
-            yRefPosSource.addEvent(yPosToCheck);
+
 
             if((Boolean) posCheckPull.pull()==true)
             {
