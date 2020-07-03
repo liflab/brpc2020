@@ -62,21 +62,4 @@ public class Check {
     }
 
 
-    public static JsonMap getSubDict(JsonMap dict, String wantedDictName){
-        Object[] out = new Object[1];
-        JPathFunction data=new JPathFunction(wantedDictName);
-        data.evaluate(new Object[]{dict},out);
-        JsonMap subDict=(JsonMap) out[0];
-
-        return subDict;
-
-    }
-
-    public static Object getData(JsonMap dict,String elementName){
-        Object data= dict.getNumber(elementName);
-
-        return data;
-
-    }
-
 }

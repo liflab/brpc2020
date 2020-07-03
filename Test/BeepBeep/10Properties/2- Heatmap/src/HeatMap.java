@@ -7,9 +7,11 @@ import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.json.JPathFunction;
+import ca.uqac.lif.cep.json.NumberValue;
 import ca.uqac.lif.cep.json.ParseJson;
 import ca.uqac.lif.cep.mtnp.UpdateTable;
 import ca.uqac.lif.cep.mtnp.UpdateTableStream;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.json.JsonElement;
@@ -35,6 +37,13 @@ public class HeatMap {
         Constant divider= new Constant(100);
         UpdateTable table= new UpdateTableStream("x", "y");
 
+
+        ApplyFunction parseData=new ApplyFunction(ParseJson.instance);
+        ApplyFunction jpfData=new ApplyFunction(new JPathFunction("data.position and direction.position"));
+        Fork datafork=new Fork(2);
+        ApplyFunction jpfX=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("x"))));
+        ApplyFunction jpfY=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("y"))));
+
         FunctionTree divideBy100=new FunctionTree(Numbers.division, StreamVariable.X, divider);
         ApplyFunction divideX=new ApplyFunction(divideBy100);
         ApplyFunction divideY=new ApplyFunction(divideBy100);
@@ -42,32 +51,22 @@ public class HeatMap {
         ApplyFunction floorY=new ApplyFunction(new Floor());
 
 
-        Connector.connect(xPosSource,divideX);
-        Connector.connect(yPosSource,divideY);
+
+        Connector.connect(read,parseData);
+        Connector.connect(parseData,jpfData);
+        Connector.connect(jpfData,datafork);
+        Connector.connect(datafork,0,jpfX,0);
+        Connector.connect(datafork,1,jpfY,0);
+        Connector.connect(jpfX,divideX);
+        Connector.connect(jpfY,divideY);
         Connector.connect(divideX,floorX);
         Connector.connect(divideY,floorY);
         Connector.connect(floorX,0,table,0);
         Connector.connect(floorY,0,table,1);
 
 
-
-        while(readp.hasNext()){
-
-            String dictionnary =String.valueOf(readp.pull());
-            Object[] out=new Object[1];
-            ParseJson.instance.evaluate(new Object[]{dictionnary},out);
-            JsonElement j =(JsonElement) out[0];
-            JsonMap jMap=(JsonMap) j;
-
-            xPosSource.addEvent((Number) getData(getSubDict(getSubDict(getSubDict(jMap,"data"),"position and direction"),"position"),"x"));
-            yPosSource.addEvent((Number) getData(getSubDict(getSubDict(getSubDict(jMap,"data"),"position and direction"),"position"),"y"));
-
-
-
-        }
-
-
         Pullable x=table.getPullableOutput();
+        
 
         System.out.println(x.pull());
 
