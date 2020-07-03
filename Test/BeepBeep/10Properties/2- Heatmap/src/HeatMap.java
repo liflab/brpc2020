@@ -30,9 +30,6 @@ public class HeatMap {
         ReadLines read=new ReadLines(is);
         Pullable readp=read.getPullableOutput();
 
-        //X and Y position Sources
-        QueueSource xPosSource=new QueueSource().loop(false);
-        QueueSource yPosSource=new QueueSource().loop(false);
 
         Constant divider= new Constant(100);
         UpdateTable table= new UpdateTableStream("x", "y");
@@ -66,7 +63,7 @@ public class HeatMap {
 
 
         Pullable x=table.getPullableOutput();
-        
+
 
         System.out.println(x.pull());
 
@@ -78,22 +75,6 @@ public class HeatMap {
 
     }
 
-    public static JsonMap getSubDict(JsonMap dict, String wantedDictName){
-        Object[] out = new Object[1];
-        JPathFunction data=new JPathFunction(wantedDictName);
-        data.evaluate(new Object[]{dict},out);
-        JsonMap subDict=(JsonMap) out[0];
-
-        return subDict;
-
-    }
-
-    public static Object getData(JsonMap dict,String elementName){
-        Object data= dict.getNumber(elementName);
-
-        return data;
-
-    }
 
 
 }
