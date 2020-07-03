@@ -23,6 +23,7 @@ public class GForce {
         ReadLines read=new ReadLines(is);
         Pullable readp=read.getPullableOutput();
 
+        //to do: implement fork
         QueueSource xGForce=new QueueSource().loop(false);
         QueueSource yGForce=new QueueSource().loop(false);
         QueueSource zGForce=new QueueSource().loop(false);

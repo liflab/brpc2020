@@ -29,10 +29,11 @@ public class PositionCheck extends Function {
         inputs[2]: X position to compare
         inputs[3]: Y position to compare
         */
-        Number xRef=(Number) objects[0];
-        Number yRef=(Number) objects[1];
-        Number xToCheck=(Number) objects[2];
-        Number yToCheck=(Number) objects[3];
+        int xRef= ((Number) objects[0]).intValue();
+        int yRef=((Number) objects[1]).intValue();
+        int xToCheck=((Number) objects[2]).intValue();
+        int yToCheck=((Number) objects[3]).intValue();
+
 
         if((xRef==xToCheck)&(yRef==yToCheck)){
             objects1[0]=true;
