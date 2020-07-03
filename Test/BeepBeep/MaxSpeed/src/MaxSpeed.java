@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class MaxSpeed {
-    
+
 
     public static void main(String[] args) {
         InputStream is= MaxSpeed.class.getResourceAsStream("dictionnaries.txt");
@@ -27,6 +27,7 @@ public class MaxSpeed {
 
         Pullable maxSpeedP=max.getPullableOutput();
         double maxSpeedValue=0;
+
         DecimalFormat decimalFormat=new DecimalFormat("#.000");//keep three decimal places
 
         while(maxSpeedP.hasNext()){
@@ -34,6 +35,7 @@ public class MaxSpeed {
         }
 
         System.out.println("The maximum speed is: "+decimalFormat.format(maxSpeedValue));
+
     }
 
 
