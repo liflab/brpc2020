@@ -1,7 +1,12 @@
+import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
+import ca.uqac.lif.cep.functions.ApplyFunction;
+import ca.uqac.lif.cep.functions.FunctionTree;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.json.JPathFunction;
+import ca.uqac.lif.cep.json.NumberValue;
 import ca.uqac.lif.cep.json.ParseJson;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 
@@ -9,26 +14,44 @@ import java.io.InputStream;
 
 public class GearTime {
 
+    public static void main(String[] args)
+    {
+        GearTime.GearTime();
+    }
+
     public static void GearTime(){
         double time0, time1, deltatime;
+        int currentGear = 0;
         deltatime = 0;
         time0 = 0;
         Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0};
         InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
-        ReadLines reader=new ReadLines(is);
-        Pullable rp=reader.getPullableOutput();
-        while (rp.hasNext()) {
+        ReadLines reader= new ReadLines(is);
 
-            String dictionnary = String.valueOf(rp.pull()); // read la prochaine ligne du dictionnaire aka toute l'esti de frame data
-            Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-            ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-            JsonElement j = (JsonElement) out[0];
-            JsonMap jMap = (JsonMap) j;
-            time1 = getTime(jMap);
+        ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
+        ApplyFunction jpfGear = new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("data.transmission.actualGear"))));
+        ApplyFunction jpfTime = new ApplyFunction(new JPathFunction("time"));
+
+        Fork dictFork= new Fork(2);
+
+        Connector.connect(reader, parseData);
+
+        Connector.connect(parseData, dictFork);
+        Connector.connect(dictFork,0,jpfGear,0);
+        Connector.connect(dictFork,0,jpfTime,0);
+
+        Connector.connect(parseData, jpfGear);
+
+        Pullable pTime= jpfTime.getPullableOutput();
+        Pullable pGear= jpfGear.getPullableOutput();
+
+        while (pGear.hasNext())
+        {
+            currentGear = ((Number) pGear.pull()).intValue();
+            time1 = convertTime(pTime.pull().toString());
             deltatime = time1 - time0;
-            gearTime[getGear(jMap)] = gearTime[getGear(jMap)] + deltatime;
+            gearTime[currentGear] = gearTime[currentGear] + deltatime;
             time0 = time1;
-
         }
 
         System.out.println("Gear 0 = " + gearTime[0]/1000 + "s");
@@ -39,17 +62,8 @@ public class GearTime {
         System.out.println("Gear 5 = " + gearTime[5]/1000 + "s");
     }
 
-    public static int getGear(JsonMap dict)
-    {
-        JsonMap subDict = getSubDict(dict, "data");
-        subDict = getSubDict(subDict, "transmission");
-        Number angleNumber = getDataNumber(subDict, "actualGear");
-        int gear = angleNumber.intValue();
-        return gear;
-    }
-
-    public static double getTime(JsonMap dict) {
-        String timeString = getDataString(dict, "time");
+    public static double convertTime(String timeString) {
+        timeString = timeString.replaceAll("\"", "");
         String[] tokens = timeString.split(":");
         String[] secondsTokens = tokens[2].split("\\.");
         int Ms = Integer.parseInt(secondsTokens[1]);
@@ -59,23 +73,5 @@ public class GearTime {
         int hoursToMs = Integer.parseInt(tokens[0]) * 3600000;
         long totalMs = secondsToMs + minutesToMs + hoursToMs + Ms;
         return totalMs;
-    }
-
-    public static JsonMap getSubDict(JsonMap dict, String wantedDictName) {
-        Object[] out = new Object[1];
-        JPathFunction data = new JPathFunction(wantedDictName);
-        data.evaluate(new Object[]{dict}, out);
-        JsonMap subDict = (JsonMap) out[0];
-        return subDict;
-    }
-
-    public static Number getDataNumber(JsonMap dict, String elementName) {
-        Number data = dict.getNumber(elementName);
-        return data;
-    }
-
-    public static String getDataString(JsonMap dict, String elementName) {
-        String data = dict.getString(elementName);
-        return data;
     }
 }
