@@ -3,9 +3,12 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.*;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.json.JPathFunction;
+import ca.uqac.lif.cep.json.NumberValue;
 import ca.uqac.lif.cep.json.ParseJson;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
+import ca.uqac.lif.cep.util.Strings;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 import javafx.scene.shape.Arc;
@@ -26,14 +29,128 @@ import java.util.Scanner;
 
 public class MaxAcceleration {
 
-    public static void MaxAccelerationBeepBeep()
+    public static void main(String[] args)
     {
-        double time0, time1;
-        double speed0, speed1;
-        double speedx0, speedx1, speedy0, speedy1;
-        double angle0, angle1;
-        InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
-        ReadLines reader=new ReadLines(is);
+        MaxAccelerationBeepBeep();
+    }
+
+    public static void MaxAccelerationBeepBeep() {
+        InputStream is = MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
+        ReadLines reader = new ReadLines(is);
+
+
+        ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
+        ApplyFunction jpfData = new ApplyFunction(new JPathFunction("data"));
+        ApplyFunction jpfTime = new ApplyFunction(new JPathFunction("time"));
+        ApplyFunction jpfSpeed = new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("engine.speed"))));
+        ApplyFunction jpfDir = new ApplyFunction(new JPathFunction("position and direction.direction"));
+        ApplyFunction jpfDirX = new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("x"))));
+        ApplyFunction jpfDirY = new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("y"))));
+        Fork dictFork = new Fork(2);
+        Fork dataFork = new Fork(2);
+        Fork speedFork = new Fork(2);
+        Fork dirFork = new Fork(2);
+        Fork dirXFork = new Fork(2);
+        Fork dirYFork = new Fork(2);
+
+        ApplyFunction arctan = new ApplyFunction(new ArcTangent());
+
+        QueueSource accX= new QueueSource();
+        QueueSource accY= new QueueSource();
+        Cumulate maxX = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
+        Cumulate maxY = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
+
+        Object maxAccelerationX = 0;
+        Object maxAccelerationY = 0;
+
+
+        Connector.connect(reader, parseData);
+        Connector.connect(parseData, dictFork);
+
+        // Time Fork
+        Connector.connect(dictFork,0,jpfTime,0);
+        // Data Fork
+        Connector.connect(dictFork,1,jpfData,0);
+        Connector.connect(jpfData,dataFork);
+
+        // Angle
+        Connector.connect(dataFork, 0, jpfDir, 0);
+        Connector.connect(jpfDir, dirFork);
+        Connector.connect(dirFork, 0, jpfDirX, 0);
+        Connector.connect(dirFork, 1, jpfDirY, 0);
+        Connector.connect(jpfDirX, dirXFork);
+        Connector.connect(jpfDirY, dirYFork);
+        Connector.connect(dirXFork, 0, arctan, 0);
+        Connector.connect(dirYFork, 0, arctan, 1);
+
+        // Speed
+        Connector.connect(dataFork,1 , jpfSpeed,0);
+        Connector.connect(jpfSpeed,speedFork);
+
+
+        // Max Acceleration
+        Connector.connect(accX,maxX);
+        Connector.connect(accY,maxY);
+
+        // Variables
+
+        Number angle0, angle1;
+        Number speed0, speed1;
+        Number speedx0, speedx1;
+        Number speedy0, speedy1;
+        Number time0, time1;
+
+        // Pullables
+        Pullable pSpeed = jpfSpeed.getPullableOutput();
+        Pullable pAngle = arctan.getPullableOutput();
+        Pullable pTime = jpfTime.getPullableOutput();
+        Pullable pX = maxX.getPullableOutput();
+        Pullable pY = maxY.getPullableOutput();
+
+        angle0 = ((Number) pAngle.pull()).doubleValue();
+        speed0 = ((Number) pSpeed.pull()).doubleValue();
+        time0 = convertTime(pTime.pull().toString());
+
+        speedx0 = getSpeedX(speed0.doubleValue(), angle0.doubleValue());
+        speedy0 = getSpeedY(speed0.doubleValue(), angle0.doubleValue());
+
+        while (pSpeed.hasNext())
+        {
+            angle1 = ((Number) pAngle.pull()).doubleValue();
+            speed1 = ((Number) pSpeed.pull()).doubleValue();
+
+            // Calculations
+
+            speedx1 = getSpeedX(speed1.doubleValue(), angle1.doubleValue());
+            speedy1 = getSpeedY(speed1.doubleValue(), angle1.doubleValue());
+            speedx1 = Math.abs(speedx1.doubleValue());
+            speedy1 = Math.abs(speedy1.doubleValue());
+            time1 = convertTime(pTime.pull().toString());
+            double deltaTime = (time1.doubleValue() - time0.doubleValue()) / 1000;
+            double deltaSpeedX = speedx1.doubleValue() - speedx0.doubleValue();
+            double deltaSpeedY = speedy1.doubleValue() - speedy0.doubleValue();
+            double accelerationX = deltaSpeedX / deltaTime;
+            double accelerationY = deltaSpeedY / deltaTime;
+            accelerationX = Math.abs(accelerationX);
+            accelerationY = Math.abs(accelerationY);
+            accX.addEvent(accelerationX);
+            accY.addEvent(accelerationY);
+            maxAccelerationX = pX.pull();
+            maxAccelerationY = pY.pull();
+
+            time0 = time1;
+            speedx0 = speedx1;
+            speedy0 = speedy1;
+        }
+
+        System.out.println("Acceleration X: " + maxAccelerationX);
+        System.out.println("Acceleration Y: " + maxAccelerationY);
+
+
+
+
+
+        /*
         Pullable rp=reader.getPullableOutput();
         QueueSource accelerationXSource = new QueueSource(); // La queue d'input X
         QueueSource accelerationYSource = new QueueSource(); // La queue d'input Y
@@ -45,14 +162,15 @@ public class MaxAcceleration {
         Pullable py = maxY.getPullableOutput();
         Object maxAccelerationX = 0;
         Object maxAccelerationY = 0;
-        String dictionnary = String.valueOf(rp.pull()); // get the first data xD! motherfucK
+        String dictionnary = String.valueOf(rp.pull()); // get the first data xD!
+        ApplyFunction Speed=new ApplyFunction(new JPathFunction("data.engine.speed"));
         speed0 = getFirstSpeed(dictionnary);
         angle0 = getAngle(dictionnary);
         speedx0 = getSpeedX(speed0, angle0);
         speedy0 = getSpeedY(speed0, angle0);
         time0 = getFirstTime(dictionnary);
         while (rp.hasNext()) {
-            dictionnary = String.valueOf(rp.pull()); // read la prochaine ligne du dictionnaire aka toute l'esti de frame data
+            dictionnary = String.valueOf(rp.pull()); // read la prochaine ligne du dictionnaire aka toute la data
             Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
             ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
             JsonElement j = (JsonElement) out[0];
@@ -79,67 +197,8 @@ public class MaxAcceleration {
         }
         System.out.println("X: " + maxAccelerationX + " km/h/s");
         System.out.println("Y: " + maxAccelerationY + " km/h/s");
-    }
 
-
-    public static double getSpeed(JsonMap dict) {
-        JsonMap subDict = getSubDict(dict, "data");
-        subDict = getSubDict(subDict, "engine");
-        Number speedNumber = getDataNumber(subDict, "speed");
-        double speed = (Double) speedNumber;
-        speed = Math.round(speed * 1000.0) / 1000.0;
-        return speed;
-    }
-
-    public static double getDirX(JsonMap dict) {
-        JsonMap subDict = getSubDict(dict, "data");
-        subDict = getSubDict(subDict, "position and direction");
-        subDict = getSubDict(subDict,"direction");
-        Number dirXNumber = getDataNumber(subDict, "x");
-        double dirX = (Double) dirXNumber;
-        dirX = Math.round(dirX * 1000.0) / 1000.0;
-        return dirX;
-    }
-
-    public static double getDirY(JsonMap dict) {
-        JsonMap subDict = getSubDict(dict, "data");
-        subDict = getSubDict(subDict, "position and direction");
-        subDict = getSubDict(subDict,"direction");
-        Number dirYNumber = getDataNumber(subDict, "y");
-        double dirY = (Double) dirYNumber;
-        dirY = Math.round(dirY * 1000.0) / 1000.0;
-        return dirY;
-    }
-
-
-
-    public static double getFirstSpeed(String dictionnary) {
-
-        Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-        ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-        JsonElement j = (JsonElement) out[0];
-        JsonMap jMap = (JsonMap) j;
-        double speed0 = getSpeed(jMap);
-        return speed0;
-    }
-
-    public static double getAngle(String dictionnary){
-    double dirX, dirY;
-    Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-    ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-    JsonElement j = (JsonElement) out[0];
-    JsonMap jMap = (JsonMap) j;
-    dirX = getDirX(jMap);
-    dirY = getDirY(jMap);
-    QueueSource sourceDirX = new QueueSource();
-    QueueSource sourceDirY = new QueueSource();
-    ApplyFunction arctan=new ApplyFunction(new ArcTangent());
-    sourceDirX.addEvent(dirX);
-    sourceDirY.addEvent(dirY);
-    Connector.connect(sourceDirX,0,arctan,0);
-    Connector.connect(sourceDirY,0,arctan,1);
-    Pullable p = arctan.getPullableOutput();
-    return (double)p.pull();
+         */
     }
 
     public static double getSpeedX(double speed, double angle) {
@@ -154,17 +213,8 @@ public class MaxAcceleration {
         return speedy;
     }
 
-    public static double getFirstTime(String dictionnary) {
-        Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-        ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-        JsonElement j = (JsonElement) out[0];
-        JsonMap jMap = (JsonMap) j;
-        double time0 = getTime(jMap);
-        return time0;
-    }
-
-    public static double getTime(JsonMap dict) {
-        String timeString = getDataString(dict, "time");
+    public static double convertTime(String timeString) {
+        timeString = timeString.replaceAll("\"", "");
         String[] tokens = timeString.split(":");
         String[] secondsTokens = tokens[2].split("\\.");
         int Ms = Integer.parseInt(secondsTokens[1]);
@@ -175,136 +225,4 @@ public class MaxAcceleration {
         long totalMs = secondsToMs + minutesToMs + hoursToMs + Ms;
         return totalMs;
     }
-
-
-/*
-    public static void MaxAcceleration() {
-        try {
-            double time0, time1;
-            double speedx0, speedx1;
-            double speedy0, speedy1;
-            File beamngDictionnaries = new File("C:\\Users\\julie\\Desktop\\dictionnary.txt");
-            Scanner dictionnariesReader = new Scanner(beamngDictionnaries); // scan le file
-            QueueSource accelerationSource = new QueueSource(); // La queue d'input 1
-            Cumulate max = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
-            Connector.connect(accelerationSource, max); // on lie la queue 1 avec la fonction de max
-            Pullable p = max.getPullableOutput(); // on fait en sorte qu'on puisse pogner l'output du max
-            Object maxAcceleration = 0; //
-            String dictionnary = dictionnariesReader.nextLine(); // get the first data xD! motherfucK
-            speedx0 = getFirstSpeedX(dictionnary);
-            speedy0 = getFirstSpeedY(dictionnary);
-            time0 = getFirstTime(dictionnary);
-            while (dictionnariesReader.hasNextLine()) {
-                dictionnary = dictionnariesReader.nextLine(); // read la prochaine ligne du dictionnaire aka toute l'esti de frame data
-                Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-                ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-                JsonElement j = (JsonElement) out[0];
-                JsonMap jMap = (JsonMap) j;
-                speed1 = getSpeed(jMap);
-                time1 = getTime(jMap);
-                double deltaTime = 1 / ((time1 - time0) / 1000);
-                double deltaSpeed = speed1 - speed0;
-                double acceleration = deltaSpeed * deltaTime ;
-                accelerationSource.addEvent(acceleration);
-                maxAcceleration = p.pull();
-                speed0 = speed1;
-                time0 = time1;
-            }
-            dictionnariesReader.close();
-            System.out.println(maxAcceleration + " km/h/s");
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-*/
-    public static void MaxSpeed() {
-        try {
-            File beamngDictionnaries = new File("C:\\Users\\julie\\Desktop\\dictionnary.txt");
-            Scanner dictionnariesReader = new Scanner(beamngDictionnaries); // scan le file
-            QueueSource speedSource = new QueueSource(); // La queue d'input 1
-            Cumulate max = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
-            Connector.connect(speedSource, max); // on lie la queue 1 avec la fonction de max
-            Pullable p = max.getPullableOutput(); // on fait en sorte qu'on puisse pogner l'output du max
-            Object maxSpeed = 0; //
-            while (dictionnariesReader.hasNextLine()) {
-                String dictionnary = dictionnariesReader.nextLine(); // read la prochaine ligne du dictionnaire aka toute l'esti de frame data
-                Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-                ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-                JsonElement j = (JsonElement) out[0];
-                JsonMap jMap = (JsonMap) j;
-                speedSource.addEvent(getSpeed(jMap));
-                maxSpeed = p.pull();
-            }
-            dictionnariesReader.close();
-            System.out.println(maxSpeed);
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-    }
-
-    public static JsonMap getSubDict(JsonMap dict, String wantedDictName) {
-        Object[] out = new Object[1];
-        JPathFunction data = new JPathFunction(wantedDictName);
-        data.evaluate(new Object[]{dict}, out);
-        JsonMap subDict = (JsonMap) out[0];
-        return subDict;
-    }
-
-    public static Number getDataNumber(JsonMap dict, String elementName) {
-        Number data = dict.getNumber(elementName);
-        return data;
-    }
-
-    public static String getDataString(JsonMap dict, String elementName) {
-        String data = dict.getString(elementName);
-        return data;
-    }
 }
-    /*
-    static float getSpeed(JsonMap jMap)
-    {
-        float speed;
-        JsonMap jspeed = jMap.getNumber("speed");
-        jspeed.toString();
-        speed = jspeed;
-        return speed;
-    }
-
-
-    public static void main(String[] args)
-    {
-        try
-        {
-            File beamngDictionnaries= new File("C:\\Users\\julie\\Desktop\\dictionnary.txt");
-            Scanner dictionnaryReader= new Scanner(beamngDictionnaries);
-            QueueSource speedSource=new QueueSource();
-            Cumulate max=new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
-            Connector.connect(speedSource,max);
-            Pullable p=max.getPullableOutput();
-            Object maxSpeed=0;
-            while(dictionnaryReader.hasNextLine())
-            {
-                String dictionnary=dictionnaryReader.nextLine();
-                Object[]out=new Object[1];
-                ParseJson.instance.evaluate(new Object[]{dictionnary},out);
-                JsonElement j=(JsonElement) out[0];
-                JsonMap jMap = (JsonMap) j;
-                speedSource.addEvent(getSpeed(jMap));
-                maxSpeed=p.pull();
-            }
-
-            dictionnaryReader.close();
-            System.out.println(maxSpeed);
-        }
-        catch(FileNotFoundException e)
-        {
-            System.out.println("error occurred.");
-            e.printStackTrace();
-        }
-    }
-
-
-}
-*/
