@@ -32,7 +32,7 @@ public class SteeringAngle {
 
     public static void SteeringAngle()
     {
-        InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
+        InputStream is=SteeringAngle.class.getResourceAsStream("dictionnary2.txt");
         ReadLines reader=new ReadLines(is);
 
         ApplyFunction parseData = new ApplyFunction(ParseJson.instance);

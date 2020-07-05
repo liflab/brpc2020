@@ -146,59 +146,6 @@ public class MaxAcceleration {
         System.out.println("Acceleration X: " + maxAccelerationX);
         System.out.println("Acceleration Y: " + maxAccelerationY);
 
-
-
-
-
-        /*
-        Pullable rp=reader.getPullableOutput();
-        QueueSource accelerationXSource = new QueueSource(); // La queue d'input X
-        QueueSource accelerationYSource = new QueueSource(); // La queue d'input Y
-        Cumulate maxX = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
-        Cumulate maxY = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
-        Connector.connect(accelerationXSource, maxX); // on lie la queue 1 avec la fonction de max
-        Connector.connect(accelerationYSource, maxY);
-        Pullable px = maxX.getPullableOutput(); // on fait en sorte qu'on puisse pogner l'output du max
-        Pullable py = maxY.getPullableOutput();
-        Object maxAccelerationX = 0;
-        Object maxAccelerationY = 0;
-        String dictionnary = String.valueOf(rp.pull()); // get the first data xD!
-        ApplyFunction Speed=new ApplyFunction(new JPathFunction("data.engine.speed"));
-        speed0 = getFirstSpeed(dictionnary);
-        angle0 = getAngle(dictionnary);
-        speedx0 = getSpeedX(speed0, angle0);
-        speedy0 = getSpeedY(speed0, angle0);
-        time0 = getFirstTime(dictionnary);
-        while (rp.hasNext()) {
-            dictionnary = String.valueOf(rp.pull()); // read la prochaine ligne du dictionnaire aka toute la data
-            Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-            ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-            JsonElement j = (JsonElement) out[0];
-            JsonMap jMap = (JsonMap) j;
-            speed1 = getSpeed(jMap);
-            angle1 = getAngle(dictionnary);
-            speedx1 = getSpeedX(speed1, angle1);
-            speedy1 = getSpeedY(speed1, angle1);
-            speedx1 = Math.abs(speedx1);
-            speedy1 = Math.abs(speedy1);
-            time1 = getTime(jMap);
-            double deltaTime = 1 / ((time1 - time0) / 1000);
-            double deltaSpeedX = speedx1 - speedx0;
-            double deltaSpeedY = speedy1 - speedy0;
-            double accelerationX = deltaSpeedX * deltaTime;
-            double accelerationY = deltaSpeedY * deltaTime;
-            accelerationXSource.addEvent(accelerationX);
-            accelerationYSource.addEvent(accelerationY);
-            maxAccelerationX = px.pull();
-            maxAccelerationY = py.pull();
-            speedx0 = speedx1;
-            speedy0 = speedy1;
-            time0 = time1;
-        }
-        System.out.println("X: " + maxAccelerationX + " km/h/s");
-        System.out.println("Y: " + maxAccelerationY + " km/h/s");
-
-         */
     }
 
     public static double getSpeedX(double speed, double angle) {

@@ -25,7 +25,7 @@ public class GearTime {
         deltatime = 0;
         time0 = 0;
         Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0};
-        InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
+        InputStream is=GearTime.class.getResourceAsStream("dictionnary2.txt");
         ReadLines reader= new ReadLines(is);
 
         ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
