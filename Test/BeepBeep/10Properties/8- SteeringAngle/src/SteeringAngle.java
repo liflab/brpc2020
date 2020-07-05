@@ -3,7 +3,9 @@ import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.*;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.json.JPathFunction;
+import ca.uqac.lif.cep.json.NumberValue;
 import ca.uqac.lif.cep.json.ParseJson;
+import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.json.JsonElement;
@@ -23,47 +25,27 @@ import java.util.Scanner;
 
 public class SteeringAngle {
 
-    public static double getSteering(JsonMap dict) {
-        JsonMap subDict = getSubDict(dict, "data");
-        subDict = getSubDict(subDict, "position and direction");
-        subDict = getSubDict(subDict,"direction");
-        Number angleNumber = getDataNumber(subDict, "steering");
-        double angle = angleNumber.doubleValue();
-        angle = Math.round(angle * 1000.0) / 1000.0;
-        return angle;
+    public static void main(String[] args)
+    {
+        SteeringAngle();
     }
 
     public static void SteeringAngle()
     {
         InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
         ReadLines reader=new ReadLines(is);
-        Pullable rp=reader.getPullableOutput();
-        while (rp.hasNext()) {
-            String dictionnary = String.valueOf(rp.pull()); // read la prochaine ligne du dictionnaire aka toute l'esti de frame data
-            Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
-            ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
-            JsonElement j = (JsonElement) out[0];
-            JsonMap jMap = (JsonMap) j;
-            System.out.println(getSteering(jMap));
+
+        ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
+        ApplyFunction jpfSteering = new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("data.position and direction.direction.steering"))));
+
+        Connector.connect(reader, parseData);
+        Connector.connect(parseData, jpfSteering);
+
+        Pullable pSteering = jpfSteering.getPullableOutput();
+
+        while (pSteering.hasNext()) {
+            System.out.println(pSteering.pull());
         }
-    }
-
-    public static JsonMap getSubDict(JsonMap dict, String wantedDictName) {
-        Object[] out = new Object[1];
-        JPathFunction data = new JPathFunction(wantedDictName);
-        data.evaluate(new Object[]{dict}, out);
-        JsonMap subDict = (JsonMap) out[0];
-        return subDict;
-    }
-
-    public static Number getDataNumber(JsonMap dict, String elementName) {
-        Number data = dict.getNumber(elementName);
-        return data;
-    }
-
-    public static String getDataString(JsonMap dict, String elementName) {
-        String data = dict.getString(elementName);
-        return data;
     }
 
 }
