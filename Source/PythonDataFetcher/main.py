@@ -1,4 +1,3 @@
-
 import datetime
 import time
 import sys
@@ -11,7 +10,6 @@ from beamngpy.sensors import Damage
 from VehicleData import VehicleData
 from BeamHome import getBeamngDirectory
 from ActualisationTime import getActualisationTime
-from debug import  isdebugging
 
 
 sns.set()  # Make seaborn set matplotlib styling
@@ -20,13 +18,10 @@ beamNGPAth= getBeamngDirectory()
 testTime=None
 dataRate=None
 
-#if debug mode
-if (isdebugging()==True):
-    testTime=int(input("Enter the time lenght of the data aquisition (in seconds):"))
-    dataRate=int(input("Enter the number of data aquisition per second:"))
+
 
 #if normal mode with the right number of arguments
-elif len(sys.argv)==3: #Command line execution
+if len(sys.argv)==3: #Command line execution
     testTime=int(sys.argv[1])#Time lenght of the test in seconds
     dataRate=int(sys.argv[2])#Number of data aquisition per second
 else:
