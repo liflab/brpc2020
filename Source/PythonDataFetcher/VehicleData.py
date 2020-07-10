@@ -48,8 +48,8 @@ class VehicleData:
         fluids = {'remainingFuel': electricSensorData['fuel'],
                   'lowFuel': electricSensorData['lowfuel'],
                   'lowFuelPressure': electricSensorData['lowpressure'],
-                  'oilTemp': electricSensorData['oiltemp'],
-                  'waterTemp': electricSensorData['watertemp']}
+                  'oilTemp': electricSensorData['oil_temperature'],
+                  'waterTemp': electricSensorData['water_temperature']}
         return fluids
 
 
@@ -59,7 +59,7 @@ class VehicleData:
     #
     # Return: transmission: A dictionnary containing the vehicle's transmission data.
     def __setTransmission(self,electricSensorData):
-        transmission = {'actualGear': electricSensorData['gear_M'],
+        transmission = {'actualGear': electricSensorData['gear_m'],
                         'clutch': electricSensorData['clutch']}
         return transmission
 
@@ -83,9 +83,9 @@ class VehicleData:
     # Return: lights: A dictionnary containing the vehicle's lights data.
     def __setLights(self,electricSensorData):
         lights = {'headLights': electricSensorData['lights'],
-                  'fogLights': electricSensorData['fog'],
-                  'lLight': electricSensorData['signal_L'],
-                  'rLight': electricSensorData['signal_R'],
+                  'fogLights': electricSensorData['fog_lights'],
+                  'lLight': electricSensorData['signal_l'],
+                  'rLight': electricSensorData['signal_r'],
                   'hazardLight': electricSensorData['hazard']}
 
 

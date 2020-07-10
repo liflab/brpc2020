@@ -32,7 +32,7 @@ print(str(dataRate))
 actualisationTime=getActualisationTime(dataRate)
 
 # Instantiate a BeamNGpy instance the other classes use for reference & communication
-beamng = BeamNGpy('localhost', 64256, beamNGPAth)  # This is the host & port used to communicate over
+beamng = BeamNGpy('localhost', 64256,home=beamNGPAth)  # This is the host & port used to communicate over
 
 # Create a blue vehicle instance that will be called 'LIF Mobile' in the simulation
 # using the etkc model the simulator ships with 'LIFLAB' licence plate
@@ -82,8 +82,8 @@ for x in range(testTime*dataRate):
     sensors = bng.poll_sensors(vehicle)  # Polls the data of all sensors attached to the vehicle
 
 
-    data=VehicleData(sensors['electrics']['values'],sensors['damage'],sensors['GForces'],vehicle.state['pos'],
-                     vehicle.state['dir'],sensors['electrics']['values']['steering'],).getData()
+    data=VehicleData(sensors['electrics'],sensors['damage'],sensors['GForces'],vehicle.state['pos'],
+                     vehicle.state['dir'],sensors['electrics']['steering'],).getData()
     data={'time':str(((datetime.datetime.now()-loopStartTime))),'data':data}
 
     print(json.dumps(data))
