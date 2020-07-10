@@ -4,4 +4,4 @@ out/
 __pycache__/
 *.class
 *.iml
-Source/PythonDataFetcher/beamngDir.txt
+beamngDir.txt
