@@ -10,17 +10,17 @@ import ca.uqac.lif.cep.tmf.Fork;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 
 public class GearTime {
 
     public static void main(String[] args)
     {
-        GearTime.GearTime();
-    }
-
-    public static void GearTime(){
-        double time0, time1, deltatime;
+        Number time0, time1;
+        double deltatime;
         int currentGear = 0;
         deltatime = 0;
         time0 = 0;
@@ -49,17 +49,44 @@ public class GearTime {
         {
             currentGear = ((Number) pGear.pull()).intValue();
             time1 = convertTime(pTime.pull().toString());
-            deltatime = time1 - time0;
+            deltatime = time1.doubleValue() - time0.doubleValue();
             gearTime[currentGear] = gearTime[currentGear] + deltatime;
             time0 = time1;
         }
 
-        System.out.println("Gear 0 = " + gearTime[0]/1000 + "s");
-        System.out.println("Gear 1 = " + gearTime[1]/1000 + "s");
-        System.out.println("Gear 2 = " + gearTime[2]/1000 + "s");
-        System.out.println("Gear 3 = " + gearTime[3]/1000 + "s");
-        System.out.println("Gear 4 = " + gearTime[4]/1000 + "s");
-        System.out.println("Gear 5 = " + gearTime[5]/1000 + "s");
+        System.out.println("Gear 0 = " + gearTime[0]/1000 + " s");
+        System.out.println("Gear 1 = " + gearTime[1]/1000 + " s");
+        System.out.println("Gear 2 = " + gearTime[2]/1000 + " s");
+        System.out.println("Gear 3 = " + gearTime[3]/1000 + " s");
+        System.out.println("Gear 4 = " + gearTime[4]/1000 + " s");
+        System.out.println("Gear 5 = " + gearTime[5]/1000 + " s");
+
+        if (args.length == 1) {
+            //Write result
+
+            try {
+                DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
+
+                FileWriter resultWriter = new FileWriter(args[0] + "data.txt");
+
+                resultWriter.write("Gear0: " + decimalFormat.format(gearTime[0]) + " s"+"\n"
+                                    +"Gear1: " + decimalFormat.format(gearTime[1]) + " s"+"\n"
+                                    +"Gear2: "+ decimalFormat.format(gearTime[2]) + " s"+"\n"
+                                    +"Gear3: "+ decimalFormat.format(gearTime[3]) + " s"+"\n"
+                                    +"Gear4: "+ decimalFormat.format(gearTime[4]) + " s"+"\n"
+                                    +"Gear5: "+ decimalFormat.format(gearTime[5]) + " s");
+
+                resultWriter.close();
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 
     public static double convertTime(String timeString) {
@@ -73,5 +100,8 @@ public class GearTime {
         int hoursToMs = Integer.parseInt(tokens[0]) * 3600000;
         long totalMs = secondsToMs + minutesToMs + hoursToMs + Ms;
         return totalMs;
+
     }
+
+
 }

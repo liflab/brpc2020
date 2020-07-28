@@ -20,13 +20,19 @@ import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.json.JsonMap;
 import ca.uqac.lif.mtnp.plot.gnuplot.Scatterplot;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
 
 
 public class MinMaxAverageRPM {
     public static void main(String[] args)
     {
-        InputStream is= MinMaxAverageRPM.class.getResourceAsStream("static.txt");
+        InputStream is= MinMaxAverageRPM.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
         Pullable readp=read.getPullableOutput();
 
@@ -37,7 +43,7 @@ public class MinMaxAverageRPM {
         UpdateTable rpmTable=new UpdateTableStream("time(second)","rpm");
         KeepLast kl=new KeepLast();
         DrawPlot rpmDraw=new DrawPlot(new Scatterplot());
-        WriteToFile rpmWrite= new WriteToFile("Static_rpm.png");
+        WriteToFile rpmWrite= new WriteToFile("RPM-Result.png");
         Pump rpmpump=new Pump();
 
 
@@ -97,8 +103,43 @@ public class MinMaxAverageRPM {
 
         }
 
-        System.out.println("Max RPM: "+max+"   "+"Min RPM: "+min+"   "+"Average RPM: "+average);
+
         rpmpump.run();
+        System.out.println("Max RPM: "+max+"   "+"Min RPM: "+min+"   "+"Average RPM: "+average);
+
+
+        if (args.length == 1) {
+            DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
+
+
+            //move graphics
+            try {
+                Path moveFile = Files.move(Paths.get("RPM-Result.png"),
+                        Paths.get(args[0]+"RPM-Result.png"));
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred (move graphics).");
+                e.printStackTrace();
+            }
+
+            //Write result
+            try {
+
+                FileWriter resultWriter = new FileWriter(args[0] + "RPM-Result.txt");
+
+                resultWriter.write("Max RPM: "+max+"\n"+"Min RPM: "+min+"\n"+"Average RPM: "+average);
+
+                resultWriter.close();
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred (results file).");
+                e.printStackTrace();
+            }
+
+        }
+
 
     }
 

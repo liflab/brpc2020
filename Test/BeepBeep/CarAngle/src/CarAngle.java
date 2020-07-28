@@ -19,11 +19,16 @@ import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 import ca.uqac.lif.mtnp.plot.gnuplot.Scatterplot;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class CarAngle {
     public static void main(String[] args) {
-        InputStream is=CarAngle.class.getResourceAsStream("d6.txt");
+        InputStream is=CarAngle.class.getResourceAsStream("data.txt");
         ReadLines reader=new ReadLines(is);
         Pullable rp=reader.getPullableOutput();
 
@@ -47,7 +52,7 @@ public class CarAngle {
         UpdateTable angleTable=new UpdateTableStream("time(second)","angle(degree)");
         DrawPlot draw= new DrawPlot(new Scatterplot());
         Pullable p=draw.getPullableOutput();
-        WriteToFile w =new WriteToFile("CarAngle6.png");
+        WriteToFile w =new WriteToFile("CarAngleResult.png");
         Pump pump=new Pump();
 
         Connector.connect(reader,parseData);
@@ -92,7 +97,20 @@ public class CarAngle {
 
         }
         pump.run();
+        if(args.length==1){
+            //Write result
 
+            try {
+                Path moveFile = Files.move(Paths.get("CarAngleResult.png"),
+                        Paths.get(args[0]+"CarAngleResult.png"));
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+        }
     }
 
 }

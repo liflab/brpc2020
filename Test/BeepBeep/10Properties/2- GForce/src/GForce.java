@@ -20,15 +20,19 @@ import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.json.JsonMap;
 import ca.uqac.lif.mtnp.plot.gnuplot.Scatterplot;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.DecimalFormat;
 
 public class GForce {
     public static void main(String[] args) {
-        InputStream is= GForce.class.getResourceAsStream("static.txt");
+        InputStream is= GForce.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
 
-        //to do: implement fork
 
         QueueSource tableXAxis=new QueueSource().loop(false);
 
@@ -66,9 +70,9 @@ public class GForce {
         DrawPlot yDraw= new DrawPlot(new Scatterplot());
         DrawPlot zDraw= new DrawPlot(new Scatterplot());
 
-        WriteToFile xWrite =new WriteToFile("Static_xGForce.png");
-        WriteToFile yWrite =new WriteToFile("Static_yGForce.png");
-        WriteToFile zWrite =new WriteToFile("Static_zGForce.png");
+        WriteToFile xWrite =new WriteToFile("xGForce.png");
+        WriteToFile yWrite =new WriteToFile("yGForce.png");
+        WriteToFile zWrite =new WriteToFile("zGForce.png");
 
         Pump xPump=new Pump();
         Pump yPump=new Pump();
@@ -158,6 +162,46 @@ public class GForce {
         yPump.run();
         zPump.run();
 
+
+        if (args.length == 1) {
+            //move graphics
+            try {
+                Path moveFile = Files.move(Paths.get("xGForce.png"),
+                        Paths.get(args[0]+"xGForce.png"));
+
+                Path moveFile2=Files.move(Paths.get("yGForce.png"),
+                        Paths.get(args[0]+"yGForce.png"));
+
+                Path moveFile3=Files.move(Paths.get("zGForce.png"),
+                        Paths.get(args[0]+"zGForce.png"));
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred (move graphics).");
+                e.printStackTrace();
+            }
+
+            //Write result
+            try {
+
+                FileWriter resultWriter = new FileWriter(args[0] + "GForceResult.txt");
+
+                resultWriter.write("X GForce max: "+decimalFormat.format(gxMaxValue)
+                        +"\n"+"X GForce min: "+decimalFormat.format(gxMinValue)
+                        +"\n"+"Y GForce max: "+decimalFormat.format(gyMaxValue)
+                        +"\n"+"Y GForce min: "+decimalFormat.format(gyMinValue)
+                        +"\n"+"Z GForce max: "+decimalFormat.format(gzMaxValue)
+                        +"\n"+"Z GForce min: "+decimalFormat.format(gzMinValue));
+
+                resultWriter.close();
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred (results file).");
+                e.printStackTrace();
+            }
+
+        }
 
     }
 

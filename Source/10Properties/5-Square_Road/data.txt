@@ -1,0 +1,6 @@
+Gear0: 1725,000 s
+Gear1: 20056,000 s
+Gear2: 8518,000 s
+Gear3: ,000 s
+Gear4: ,000 s
+Gear5: ,000 s

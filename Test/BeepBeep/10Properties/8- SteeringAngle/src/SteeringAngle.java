@@ -12,9 +12,7 @@ import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 import javafx.scene.shape.Arc;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -25,14 +23,8 @@ import java.util.Scanner;
 
 public class SteeringAngle {
 
-    public static void main(String[] args)
-    {
-        SteeringAngle();
-    }
-
-    public static void SteeringAngle()
-    {
-        InputStream is=SteeringAngle.class.getResourceAsStream("dictionnary2.txt");
+    public static void main(String[] args) throws IOException {
+        InputStream is=SteeringAngle.class.getResourceAsStream("data.txt");
         ReadLines reader=new ReadLines(is);
 
         ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
@@ -43,9 +35,26 @@ public class SteeringAngle {
 
         Pullable pSteering = jpfSteering.getPullableOutput();
 
-        while (pSteering.hasNext()) {
-            System.out.println(pSteering.pull());
-        }
+            if(args.length==1){
+                FileWriter resultWriter = new FileWriter(args[0] + "SteeringAngleResult.txt");
+
+                while (pSteering.hasNext()) {
+
+                    resultWriter.write(pSteering.pull().toString()+"\n");
+
+                }
+                resultWriter.close();
+            }
+            else {
+                while (pSteering.hasNext()) {
+                    System.out.println(pSteering.pull());
+
+                }
+
+            }
+
     }
+
+
 
 }

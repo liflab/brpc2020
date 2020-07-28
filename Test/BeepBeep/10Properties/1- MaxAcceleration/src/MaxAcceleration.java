@@ -12,10 +12,12 @@ import ca.uqac.lif.cep.util.Strings;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 import javafx.scene.shape.Arc;
+import javafx.scene.shape.Path;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -29,13 +31,33 @@ import java.util.Scanner;
 
 public class MaxAcceleration {
 
-    public static void main(String[] args)
-    {
-        MaxAccelerationBeepBeep();
+    public static double getSpeedX(double speed, double angle) {
+
+        double speedx = speed * Math.cos(angle);
+        return speedx;
     }
 
-    public static void MaxAccelerationBeepBeep() {
-        InputStream is = MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
+    public static double getSpeedY(double speed, double angle) {
+
+        double speedy = speed * Math.sin(angle);
+        return speedy;
+    }
+
+    public static double convertTime(String timeString) {
+        timeString = timeString.replaceAll("\"", "");
+        String[] tokens = timeString.split(":");
+        String[] secondsTokens = tokens[2].split("\\.");
+        int Ms = Integer.parseInt(secondsTokens[1]);
+        Ms = Ms / 1000;
+        int secondsToMs = Integer.parseInt(secondsTokens[0]) * 1000;
+        int minutesToMs = Integer.parseInt(tokens[1]) * 60000;
+        int hoursToMs = Integer.parseInt(tokens[0]) * 3600000;
+        long totalMs = secondsToMs + minutesToMs + hoursToMs + Ms;
+        return totalMs;
+    }
+
+    public static void main(String[] args) {
+        InputStream is = MaxAcceleration.class.getResourceAsStream("data.txt");
         ReadLines reader = new ReadLines(is);
 
 
@@ -55,8 +77,8 @@ public class MaxAcceleration {
 
         ApplyFunction arctan = new ApplyFunction(new ArcTangent());
 
-        QueueSource accX= new QueueSource();
-        QueueSource accY= new QueueSource();
+        QueueSource accX = new QueueSource();
+        QueueSource accY = new QueueSource();
         Cumulate maxX = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
         Cumulate maxY = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
 
@@ -68,10 +90,10 @@ public class MaxAcceleration {
         Connector.connect(parseData, dictFork);
 
         // Time Fork
-        Connector.connect(dictFork,0,jpfTime,0);
+        Connector.connect(dictFork, 0, jpfTime, 0);
         // Data Fork
-        Connector.connect(dictFork,1,jpfData,0);
-        Connector.connect(jpfData,dataFork);
+        Connector.connect(dictFork, 1, jpfData, 0);
+        Connector.connect(jpfData, dataFork);
 
         // Angle
         Connector.connect(dataFork, 0, jpfDir, 0);
@@ -84,13 +106,13 @@ public class MaxAcceleration {
         Connector.connect(dirYFork, 0, arctan, 1);
 
         // Speed
-        Connector.connect(dataFork,1 , jpfSpeed,0);
-        Connector.connect(jpfSpeed,speedFork);
+        Connector.connect(dataFork, 1, jpfSpeed, 0);
+        Connector.connect(jpfSpeed, speedFork);
 
 
         // Max Acceleration
-        Connector.connect(accX,maxX);
-        Connector.connect(accY,maxY);
+        Connector.connect(accX, maxX);
+        Connector.connect(accY, maxY);
 
         // Variables
 
@@ -114,8 +136,7 @@ public class MaxAcceleration {
         speedx0 = getSpeedX(speed0.doubleValue(), angle0.doubleValue());
         speedy0 = getSpeedY(speed0.doubleValue(), angle0.doubleValue());
 
-        while (pSpeed.hasNext())
-        {
+        while (pSpeed.hasNext()) {
             angle1 = ((Number) pAngle.pull()).doubleValue();
             speed1 = ((Number) pSpeed.pull()).doubleValue();
 
@@ -146,30 +167,27 @@ public class MaxAcceleration {
         System.out.println("Acceleration X: " + maxAccelerationX);
         System.out.println("Acceleration Y: " + maxAccelerationY);
 
-    }
+        if (args.length == 1) {
+            //Write result
 
-    public static double getSpeedX(double speed, double angle) {
+            try {
+                DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
 
-        double speedx = speed * Math.cos(angle);
-        return speedx;
-    }
+                FileWriter resultWriter = new FileWriter(args[0] + "MaxAccelerationResult.txt");
 
-    public static double getSpeedY(double speed, double angle) {
+                resultWriter.write("Maximum X acceleration: " + decimalFormat.format(maxAccelerationX)
+                                    +"\n"+"Maximum Y acceleration: "+decimalFormat.format(maxAccelerationY));
 
-        double speedy = speed * Math.sin(angle);
-        return speedy;
-    }
+                resultWriter.close();
+            }
 
-    public static double convertTime(String timeString) {
-        timeString = timeString.replaceAll("\"", "");
-        String[] tokens = timeString.split(":");
-        String[] secondsTokens = tokens[2].split("\\.");
-        int Ms = Integer.parseInt(secondsTokens[1]);
-        Ms = Ms / 1000;
-        int secondsToMs = Integer.parseInt(secondsTokens[0]) * 1000;
-        int minutesToMs = Integer.parseInt(tokens[1]) * 60000;
-        int hoursToMs = Integer.parseInt(tokens[0]) * 3600000;
-        long totalMs = secondsToMs + minutesToMs + hoursToMs + Ms;
-        return totalMs;
+            catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+        }
+
+
     }
 }

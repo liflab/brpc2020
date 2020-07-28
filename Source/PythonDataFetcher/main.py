@@ -83,7 +83,7 @@ for x in range(testTime*dataRate):
 
 
     data=VehicleData(sensors['electrics'],sensors['damage'],sensors['GForces'],vehicle.state['pos'],
-                     vehicle.state['dir'],sensors['electrics']['steering'],).getData()
+                     vehicle.state['dir'],sensors['electrics']['steering']).getData()
     data={'time':str(((datetime.datetime.now()-loopStartTime))),'data':data}
 
     print(json.dumps(data))

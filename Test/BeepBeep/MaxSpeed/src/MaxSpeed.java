@@ -7,13 +7,18 @@ import ca.uqac.lif.cep.json.NumberValue;
 import ca.uqac.lif.cep.json.ParseJson;
 import ca.uqac.lif.cep.util.Numbers;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
 public class MaxSpeed {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+
         InputStream is= MaxSpeed.class.getResourceAsStream("dictionnaries.txt");
         ReadLines reader=new ReadLines(is);
 
@@ -35,6 +40,26 @@ public class MaxSpeed {
         }
 
         System.out.println("The maximum speed is: "+decimalFormat.format(maxSpeedValue));
+
+        if(args.length==1){
+            //Write result
+
+            try {
+            FileWriter resultWriter = new FileWriter(args[0]+"MaxSpeedResult.txt");
+            resultWriter.write("The maximum speed is: "+decimalFormat.format(maxSpeedValue));
+            resultWriter.close();
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+        }
+
+
+
+
 
     }
 

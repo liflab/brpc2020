@@ -14,18 +14,32 @@ import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
 import ca.uqac.lif.json.JsonParser;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Check {
     public static void main(String[] args){
         Scanner userInput=new Scanner(System.in);
-        System.out.print("Enter the X position to check: ");
-        int xPosInput=userInput.nextInt();
-        System.out.print("Enter the Y position to check: ");
-        int yPosInput=userInput.nextInt();
+        int xPosInput=0;
+        int yPosInput=0;
 
-        InputStream is= Check.class.getResourceAsStream("dictionnary.txt");
+        if (args.length==3){
+
+            xPosInput=Integer.parseInt(args[1].trim());
+            yPosInput=Integer.parseInt(args[2].trim());
+        }
+        else{
+            System.out.print("Enter the X position to check: ");
+            xPosInput=userInput.nextInt();
+            System.out.print("Enter the Y position to check: ");
+            yPosInput=userInput.nextInt();
+        }
+
+
+        InputStream is= Check.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
 
         Constant xPosCheck=new Constant(xPosInput);
@@ -58,7 +72,26 @@ public class Check {
 
         }
         System.out.println(counter);
+        if (args.length == 3) {
+            //Write result
 
+            try {
+                DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
+
+                FileWriter resultWriter = new FileWriter(args[0] + "PositionCheckResult.txt");
+
+                resultWriter.write("Number of data aquisitions on ("+xPosInput+" , "+yPosInput+"): "
+                                    + decimalFormat.format(counter));
+
+                resultWriter.close();
+            }
+
+            catch (IOException e) {
+                System.out.println("An error occurred.");
+                e.printStackTrace();
+            }
+
+        }
     }
 
 
