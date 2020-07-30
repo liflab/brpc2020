@@ -1,15 +1,21 @@
 import os
-
 from getBeepBeepProgramsFilePath import getBeepBeepProgramsFilePath
 from getRepoRootFilePath import getReposRootFilePath
+
+
+##Program to print the commands requiered to compile the BeepBeep program from the command line.
+#
+#Note: None.
+#
+#Arguments: None.
+#
+#Return: None.
 reposRoot=getReposRootFilePath()
 filePaths=getBeepBeepProgramsFilePath(getReposRootFilePath())
 programsName = ["MaxSpeed", "CarAngle", "MaxAcceleration", "GForce",
                 "Check", "GearTime", "MinMaxAverageRPM", "SteeringAngle"]
 
-#It seems that admin's rights are needed to compile java.
-#This program print the commands to compile all the beepbeep programs.
-#You just have to run it, copy the output and copy it into the cmd (with admin's rights).
+
 for x in range(len(filePaths)):
     os.chdir(filePaths[x])
     print("cd " +filePaths[x])

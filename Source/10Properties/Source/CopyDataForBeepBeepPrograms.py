@@ -3,7 +3,16 @@ import os
 from CopyDataFile import CopyDataFile
 
 
-def CopyDataForBeepBeepPrograms(scenarioListId,dataFilePath,repoRootFilePath):
+##Function to copy the data file of a scenario into all the beebeep programs' folder.
+#
+#Note: None.
+#
+#Arguments
+#Argument1: dataFilePath: the file path of the data acquired during the execution of the scenario
+#Argument2: repoRootFilePath: the repos' root file path
+#
+#Return: None.
+def CopyDataForBeepBeepPrograms(dataFilePath,repoRootFilePath):
 
 
     CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,

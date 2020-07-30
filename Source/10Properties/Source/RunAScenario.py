@@ -7,7 +7,16 @@ import sns as sns
 from VehicleData import VehicleData
 from getScenario import getScenario
 
-
+##Function to run a scenario in BeamNG
+#
+#Note: BeamNG is closed at the end of the function.
+#
+#Arguments:
+#Argument1: scenarioNo: The scenario number.
+#Argument2: simultationTime: The time lenght of the simulation (in seconds).
+#Argument3: datarate: the data aquisition rate per second.
+#
+#Return: None.
 def RunAScenario(scenarioNo, simulationTime, datarate):
     dir=os.path.dirname(os.path.abspath(__file__))
     dir = dir[:-6]#Removing "Source" from the directory to concatenate the directory for the selected scenario
@@ -68,7 +77,7 @@ def RunAScenario(scenarioNo, simulationTime, datarate):
                                     vehicle.state['pos'],vehicle.state['dir'], sensors['electrics']['steering']).getData()
                 data = {'time': str(((datetime.datetime.now() - loopStartTime))), 'data': data}
 
-                datafile.write(json.dumps(data)+"\n")
+                datafile.write(json.dumps(data)+"\n")#write data
 
                 loopExecTime = (time.time() - loopIterationStartTime)
 

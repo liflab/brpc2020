@@ -3,6 +3,14 @@ from beamngpy.sensors import Electrics, Damage, GForces
 
 from BeamHome import getBeamngDirectory
 
+##Function to get the data required to execute the wall crash scenario.
+#
+#Note: None.
+#
+#Arguments
+#Argument1: testName: The name of the scenario the player will see when the game will start.
+#
+#Return: scenarioDict: a dictionnary who contains the required objects to compile the scenario and run it trough BeamNG.
 
 def getWallCrashScenario(testName):
     beamng = BeamNGpy('localhost', 64256, home=getBeamngDirectory())  # This is the host & port used to communicate over

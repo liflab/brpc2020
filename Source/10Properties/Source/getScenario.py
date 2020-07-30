@@ -4,7 +4,14 @@ from StaticScenario import getStaticScenario
 from StraightFowardScenario import getStraightFowardScenario
 from WallCrashScenario import getWallCrashScenario
 
-
+##Function to return the scenario to execute
+#
+#Note: None.
+#
+#Arguments:
+#Arguments1:scenarioNo: the scenario number
+#
+#Return: scenarioDict: the dictionnary with the data of the scenario
 def getScenario(scenarioNo):
     scenarioNo=int(scenarioNo)
     testName=None

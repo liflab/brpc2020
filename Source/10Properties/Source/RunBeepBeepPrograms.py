@@ -1,9 +1,17 @@
 import os
 import subprocess
 
-from getBeepBeepProgramsFilePath import getBeepBeepProgramsFilePath
 
-
+##Function to execute all the beepbeep programs
+#
+#Note: BeamNG is closed at the end of the function.
+#
+#Arguments:
+#Argument1: scenarioNo: The scenario number.
+#Argument2: simultationTime: The time lenght of the simulation (in seconds).
+#Argument3: datarate: the data aquisition rate per second.
+#
+#Return: None.
 def RunBeepBeepPrograms(beepbeepProgramsFilePath,reposRootFilePath,scenarioDataFilePath):
 
     programsName=["MaxSpeed","CarAngle","MaxAcceleration","GForce",

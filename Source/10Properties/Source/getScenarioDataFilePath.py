@@ -1,9 +1,17 @@
 import os
 
 
+##Function to return the scenario to execute
+#
+#Note: None.
+#
+#Arguments:
+#Arguments1:scenarioNo: the scenario number
+#
+#Return: scenarioDict: the dictionnary with the data of the scenario
 def getScenarioDataFilePath(scenarioListId):
     dataFilePath=os.path.dirname(os.path.abspath(__file__))
-    dataFilePath=dataFilePath[:-6]
+    dataFilePath=dataFilePath[:-6]#Remove the "Source" in the file path
 
     if (scenarioListId==0):
         dataFilePath=os.path.join(dataFilePath,"1-Static")

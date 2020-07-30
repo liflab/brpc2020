@@ -10,8 +10,6 @@
 #direction: A list containing the x,y and z parameters of the vehicle's position.
 #steering: The rotation degree of the steering wheel.
 
-
-
 class VehicleData:
     def __init__(self, electricSensorData,damageSensorData,gForces,position,direction,steering):
 

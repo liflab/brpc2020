@@ -1,6 +1,13 @@
 import os
 
-
+##Function to get a list with the filepath of all the beepbeep programs.
+#
+#Note: None.
+#
+#Arguments
+#Argument1: reposRootFilePath: The file path of the root of the brpc2020 repos.
+#
+#Return: beepbeepProgramsFilePath:A list wit the file path of all the beepbeep programs.
 def getBeepBeepProgramsFilePath(reposRootFilePath):
     filepath = os.path.join(reposRootFilePath, "Test", "BeepBeep")
     beepbeepProgramsFilePath =[]
