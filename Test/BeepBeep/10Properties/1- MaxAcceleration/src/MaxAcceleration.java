@@ -79,7 +79,7 @@ public class MaxAcceleration {
 
         QueueSource accX = new QueueSource();
         QueueSource accY = new QueueSource();
-        Cumulate maxX = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum)); // fonction cumulative qui retourne le max
+        Cumulate maxX = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
         Cumulate maxY = new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
 
         Object maxAccelerationX = 0;

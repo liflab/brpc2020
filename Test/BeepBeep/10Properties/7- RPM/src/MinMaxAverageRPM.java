@@ -30,6 +30,12 @@ import java.text.DecimalFormat;
 
 
 public class MinMaxAverageRPM {
+
+    /**
+     * @Desc Program to get min, max and average rpm from a BeamNG data aquisition and generate a graphic of the rpm as a function of time.
+     *
+     * @Param resultFilePath (optional) the file path to specify where to write the results.
+     */
     public static void main(String[] args)
     {
         InputStream is= MinMaxAverageRPM.class.getResourceAsStream("data.txt");

@@ -19,7 +19,7 @@ from getScenario import getScenario
 #Return: None.
 def RunAScenario(scenarioNo, simulationTime, datarate):
     dir=os.path.dirname(os.path.abspath(__file__))
-    dir = dir[:-6]#Removing "Source" from the directory to concatenate the directory for the selected scenario
+    dir = dir[:-20]#Removing "SimulationAutomation" from the directory to concatenate the directory for the selected scenario
     scenarioNoFolderName=None
     filePath=None
     scenarioDict=None

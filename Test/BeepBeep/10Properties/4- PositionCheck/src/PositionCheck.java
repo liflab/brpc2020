@@ -4,6 +4,17 @@ import ca.uqac.lif.cep.functions.Function;
 
 import java.util.Set;
 
+
+/**
+ * @Desc Custom Function to determine if the vehicle was on the reference position square at the time of the currently rode dictionnary.
+ *
+ * @Param (int) X reference position value
+ * @Param2 (int) Y reference position value
+ * @Param3  (int) X position to compare
+ * @Param4  (int) Y position to compare
+ *
+ * @Return (bool) true or false depending if the vehicule was on the reference position or not
+ */
 public class PositionCheck extends Function {
     @Override
     public int getInputArity(){

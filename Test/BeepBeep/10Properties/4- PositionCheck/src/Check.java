@@ -9,11 +9,6 @@ import ca.uqac.lif.cep.json.JPathFunction;
 import ca.uqac.lif.cep.json.NumberValue;
 import ca.uqac.lif.cep.json.ParseJson;
 import ca.uqac.lif.cep.tmf.Fork;
-import ca.uqac.lif.cep.tmf.QueueSource;
-import ca.uqac.lif.json.JsonElement;
-import ca.uqac.lif.json.JsonMap;
-import ca.uqac.lif.json.JsonParser;
-
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
@@ -21,6 +16,13 @@ import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Check {
+    /**
+     * @Desc Program to get the number of data aquisitions that the vehicule spent on a 1x1 game unit square.
+     *
+     * @Param (string) resultFilePath (optional) the file path to specify where to write the result.
+     * @Param2 (int) X reference position
+     * @Param3 (int) Y reference position
+     */
     public static void main(String[] args){
         Scanner userInput=new Scanner(System.in);
         int xPosInput=0;
@@ -31,7 +33,7 @@ public class Check {
             xPosInput=Integer.parseInt(args[1].trim());
             yPosInput=Integer.parseInt(args[2].trim());
         }
-        else{
+        else{ //if the program is executed from the ide
             System.out.print("Enter the X position to check: ");
             xPosInput=userInput.nextInt();
             System.out.print("Enter the Y position to check: ");
@@ -72,6 +74,8 @@ public class Check {
 
         }
         System.out.println(counter);
+
+        //If the program is executed with parameters
         if (args.length == 3) {
             //Write result
 

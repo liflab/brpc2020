@@ -15,7 +15,11 @@ import java.text.DecimalFormat;
 
 public class MaxSpeed {
 
-
+/**
+ * @Desc Program to get maximum speed from a BeamNG data aquisition.
+ *
+ * @Param string resultFilePath(optional)   The file path to specify where to write de result.
+ */
     public static void main(String[] args) throws IOException {
 
 
@@ -39,10 +43,11 @@ public class MaxSpeed {
             maxSpeedValue=((Number) maxSpeedP.pull()).doubleValue();
         }
 
-        System.out.println("The maximum speed is: "+decimalFormat.format(maxSpeedValue));
+        System.out.println("The maximum speed is: "+decimalFormat.format(maxSpeedValue));//Print Result
 
+        //if the program is executed with parameters
         if(args.length==1){
-            //Write result
+            //Write result in the result folder
 
             try {
             FileWriter resultWriter = new FileWriter(args[0]+"MaxSpeedResult.txt");

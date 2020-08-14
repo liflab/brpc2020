@@ -11,7 +11,7 @@ import os
 #Return: scenarioDict: the dictionnary with the data of the scenario
 def getScenarioDataFilePath(scenarioListId):
     dataFilePath=os.path.dirname(os.path.abspath(__file__))
-    dataFilePath=dataFilePath[:-6]#Remove the "Source" in the file path
+    dataFilePath=dataFilePath[:-20]#Remove the "SimulationAutomation" in the file path
 
     if (scenarioListId==0):
         dataFilePath=os.path.join(dataFilePath,"1-Static")

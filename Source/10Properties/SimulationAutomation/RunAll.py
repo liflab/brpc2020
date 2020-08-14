@@ -21,11 +21,12 @@ beepbeepProgramsFilePath = getBeepBeepProgramsFilePath(repoRootFilePath)
 for scenarioName in scenarioNamesList:
     print(scenarioName)
 
-    aquisitionLenght = int(input("Enter in seconds the time lenght of the data aquistion period:"))
-    aquisitionRate = int(input("Enter the number of the data aquisition per second:"))
+    aquisitionLenght = int(input("\tEnter in seconds the time lenght of the data aquistion period:"))
+    aquisitionRate = int(input("\tEnter the number of the data aquisition per second:"))
 
     dataFilePath=getScenarioDataFilePath(x-1)
     dataFilePath=dataFilePath[:-8]
+
 
     RunAScenario(x, aquisitionLenght, aquisitionRate)
 
