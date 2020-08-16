@@ -29,7 +29,17 @@ import java.util.Scanner;
 
 public class CarAngle {
 
-b
+    /**
+     * @Desc Program generate a graphic of the car angle as a function of time from a BeamNG data aquisition.
+     *
+     * @Note The program can be also executed in the IDE without parameters.
+     *
+     * @Param string The file path to specify where to write the result.
+     *
+     * @Param2 double The interval time wich each data acquisition is performed (in seconds).
+     *
+     * @Param3 double The time length of the data acquistion period (in seconds).
+     */
     public static void main(String[] args) {
         double dataAquisitionInterval=0;
         double aquisitionTimePeriod=0;
@@ -114,18 +124,19 @@ b
 
         //note: in this test code, the data aquisition rate per second is hardcoded
 
-        while(time<30.1){
+        while(time<(aquisitionTimePeriod+dataAquisitionInterval)){
 
             xAxisTableSource.addEvent(time);
-            time=time+0.10;
+            time=time+dataAquisitionInterval;
 
 
         }
         pump.run();
-        if(args.length==1){
+        if(args.length==3){
             //Write result
 
             try {
+                //move the result file to the scenario's result folder because you can't change the current working directory in Java (big oof).
                 Path moveFile = Files.move(Paths.get("CarAngleResult.png"),
                         Paths.get(args[0]+"CarAngleResult.png"));
             }
