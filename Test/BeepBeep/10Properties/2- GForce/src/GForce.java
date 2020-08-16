@@ -27,9 +27,35 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DecimalFormat;
+import java.util.Scanner;
 
 public class GForce {
     public static void main(String[] args) {
+        /**
+         * @Desc For each dimension, the program generate a graphic of the car's gforce as a function of time from a BeamNG data aquisition.
+         *
+         * @Note The program can be also executed in the IDE without parameters.
+         *
+         * @Param string The file path to specify where to write the result.
+         *
+         * @Param2 double The interval time wich each data acquisition is performed (in seconds).
+         */
+        double dataAquisitionInterval=0;
+        Scanner userInput=new Scanner(System.in);
+        if(args.length==2)//if the program is executed with parameters
+        {
+            dataAquisitionInterval=Double.parseDouble(args[1].trim());
+        }
+        else if (args.length==0)
+        {//if the program is executed without parameters from the ide
+            System.out.print("Enter the interval time wich each data acquisition is performed (in seconds): ");
+            dataAquisitionInterval=userInput.nextDouble();
+        }
+        else
+        {
+            throw  new IllegalArgumentException(String.format("\n\tThis program can only be executed with 0 or 3 arguments.\n\targs.length value: %d",args.length));
+        }
+
         InputStream is= GForce.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
 
@@ -147,7 +173,7 @@ public class GForce {
             gzMinValue=((Number) zMinPull.pull()).doubleValue();
 
             tableXAxis.addEvent(time);
-            time+=0.10;
+            time+=dataAquisitionInterval;
 
         }
 
@@ -163,7 +189,7 @@ public class GForce {
         zPump.run();
 
 
-        if (args.length == 1) {
+        if (args.length == 2) {
             //move graphics
             try {
                 Path moveFile = Files.move(Paths.get("xGForce.png"),

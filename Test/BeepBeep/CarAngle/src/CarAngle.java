@@ -29,19 +29,8 @@ import java.util.Scanner;
 
 public class CarAngle {
 
-    /**
-     * @Desc Program generate a graphic of the car angle as a function of time from a BeamNG data aquisition.
-     *
-     * @Note The program can be also executed in the IDE without parameters.
-     *
-     * @Param string The file path to specify where to write the result.
-     *
-     * @Param2 double The interval time wich each data acquisition is performed (in seconds).
-     *
-     * @Param3 double The time length of the data acquistion period (in seconds).
-     */
+b
     public static void main(String[] args) {
-//java -classpath "C:\Users\marc\PycharmProjects\brpc2020\beepbeep-3.jar;C:\Users\marc\PycharmProjects\brpc2020\json.jar;C:\Users\marc\PycharmProjects\brpc2020\mtnp.jar;." CarAngle
         double dataAquisitionInterval=0;
         double aquisitionTimePeriod=0;
         Scanner userInput= new Scanner(System.in);

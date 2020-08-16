@@ -2,7 +2,6 @@ import json
 import os
 import datetime
 import time
-import sns as sns
 
 from VehicleData import VehicleData
 from getScenario import getScenario
