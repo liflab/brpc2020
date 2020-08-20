@@ -1,0 +1,3 @@
+Max RPM: 6431.736
+Min RPM: 0.0
+Average RPM: 2577.8987
