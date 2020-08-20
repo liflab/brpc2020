@@ -7,6 +7,7 @@ from get10PropertiesFilePath import get10PropertiesFilePath
 from getBeepBeepProgramsFilePath import getBeepBeepProgramsFilePath
 from getRepoRootFilePath import getReposRootFilePath
 from getScenarioDataFilePath import getScenarioDataFilePath
+from GenerateResultsFolder import GenerateResultsFolder
 
 
 ##Script to run automate the scenario results generation.
@@ -42,7 +43,7 @@ for scenarioName in scenarioNamesList:
     RunBeepBeepPrograms(beepbeepProgramsFilePath,repoRootFilePath,dataFilePath,aquisitionLenght,aquisitionRate)
     x += 1
 
-
+GenerateResultsFolder()
 
 
 

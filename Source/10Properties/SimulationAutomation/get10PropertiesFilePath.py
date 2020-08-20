@@ -11,7 +11,6 @@ import os
 def get10PropertiesFilePath():
     dir=os.path.dirname(os.path.abspath(__file__))
     dir=dir[:-21]
-    print(dir)
 
     return dir
 

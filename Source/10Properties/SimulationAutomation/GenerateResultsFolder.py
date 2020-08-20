@@ -17,7 +17,6 @@ def GenerateResultsFolder():
     MoveFolder(os.path.join(rootFilePath,"4-Donut"),destinationFilePath)#Move the results folder of the donut scenario
     MoveFolder(os.path.join(rootFilePath,"5-Square_Road"),destinationFilePath)#Move the results folder of the square road scenario
 
-GenerateResultsFolder()
 
 
 
