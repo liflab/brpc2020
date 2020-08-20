@@ -25,7 +25,7 @@ public class GearTime {
         deltatime = 0;
         time0 = 0;
         Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0};
-        InputStream is=GearTime.class.getResourceAsStream("dictionnary2.txt");
+        InputStream is=GearTime.class.getResourceAsStream("data.txt");
         ReadLines reader= new ReadLines(is);
 
         ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
@@ -67,7 +67,7 @@ public class GearTime {
             try {
                 DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
 
-                FileWriter resultWriter = new FileWriter(args[0] + "data.txt");
+                FileWriter resultWriter = new FileWriter(args[0] + "GearTimeResults.txt");
 
                 resultWriter.write("Gear0: " + decimalFormat.format(gearTime[0]) + " s"+"\n"
                                     +"Gear1: " + decimalFormat.format(gearTime[1]) + " s"+"\n"
