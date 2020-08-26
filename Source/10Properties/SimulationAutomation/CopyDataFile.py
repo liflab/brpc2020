@@ -6,8 +6,8 @@ import shutil
 #
 #Note: None.
 #
-#Argument1: originalDataFilePath: the file path of the source
-#Argument2:desinationDataFilePath: the file path of the destination
+#Argument: originalDataFilePath: the file path of the source
+#Argument: desinationDataFilePath: the file path of the destination
 #
 #Return: None.
 def CopyDataFile(originalDataFilePath,destinationDataFilePath):

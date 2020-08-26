@@ -7,9 +7,8 @@ from CopyDataFile import CopyDataFile
 #
 #Note: None.
 #
-#Arguments
-#Argument1: dataFilePath: the file path of the data acquired during the execution of the scenario
-#Argument2: repoRootFilePath: the repos' root file path
+#Argument: dataFilePath: the file path of the data acquired during the execution of the scenario
+#Argument: repoRootFilePath: the repos' root file path
 #
 #Return: None.
 def CopyDataForBeepBeepPrograms(dataFilePath,repoRootFilePath):
