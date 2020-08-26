@@ -34,7 +34,7 @@ public class MinMaxAverageRPM {
     /**
      * @Desc Program to get min, max and average rpm from a BeamNG data aquisition and generate a graphic of the rpm as a function of time.
      *
-     * @Param resultFilePath (optional) the file path to specify where to write the results.
+     * @Param resultFilePath (optional): The file path to specify where to write the results.
      */
     public static void main(String[] args)
     {
@@ -110,10 +110,12 @@ public class MinMaxAverageRPM {
         }
 
 
-        rpmpump.run();
+        rpmpump.run();//start the pump to generate de graphic
+
+        //Print results
         System.out.println("Max RPM: "+max+"   "+"Min RPM: "+min+"   "+"Average RPM: "+average);
 
-
+        //if the program is not executed in an ide.
         if (args.length == 1) {
             DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
 

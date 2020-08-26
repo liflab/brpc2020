@@ -20,8 +20,8 @@ public class Check {
      * @Desc Program to get the number of data aquisitions that the vehicule spent on a 1x1 game unit square.
      *
      * @Param (string) resultFilePath (optional) the file path to specify where to write the result.
-     * @Param2 (int) X reference position
-     * @Param3 (int) Y reference position
+     * @Param (int) X reference position
+     * @Param (int) Y reference position
      */
     public static void main(String[] args){
         Scanner userInput=new Scanner(System.in);
@@ -33,7 +33,7 @@ public class Check {
             xPosInput=Integer.parseInt(args[1].trim());
             yPosInput=Integer.parseInt(args[2].trim());
         }
-        else{ //if the program is executed from the ide
+        else{ //if the program is executed without parameters
             System.out.print("Enter the X position to check: ");
             xPosInput=userInput.nextInt();
             System.out.print("Enter the Y position to check: ");

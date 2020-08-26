@@ -5,7 +5,13 @@ from MoveFolder import MoveFolder
 from get10PropertiesFilePath import get10PropertiesFilePath
 from datetime import datetime
 
-
+##Function to generate a results folder.
+#
+#Note: None.
+#
+#Argument: None.
+#
+#Return: None.
 def GenerateResultsFolder():
     rootFilePath=get10PropertiesFilePath()
 
