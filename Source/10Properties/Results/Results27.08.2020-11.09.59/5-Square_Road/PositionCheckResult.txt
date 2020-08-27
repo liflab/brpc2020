@@ -1,0 +1,1 @@
+Number of data aquisitions on (-20 , 37): 1,000
