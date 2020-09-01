@@ -35,10 +35,8 @@ public class CarAngle {
      * @Note The program can be also executed in the IDE without parameters.
      *
      * @Param string The file path to specify where to write the result.
-     *
-     * @Param2 double The interval time wich each data acquisition is performed (in seconds).
-     *
-     * @Param3 double The time length of the data acquistion period (in seconds).
+     * @Param double The interval time wich each data acquisition is performed (in seconds).
+     * @Param double The time length of the data acquistion period (in seconds).
      */
     public static void main(String[] args) {
         double dataAquisitionInterval=0;
@@ -121,8 +119,6 @@ public class CarAngle {
 
 
         double time=0;
-
-        //note: in this test code, the data aquisition rate per second is hardcoded
 
         while(time<(aquisitionTimePeriod+dataAquisitionInterval)){
 

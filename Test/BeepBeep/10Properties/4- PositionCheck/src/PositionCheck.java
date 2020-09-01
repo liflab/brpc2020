@@ -6,14 +6,14 @@ import java.util.Set;
 
 
 /**
- * @Desc Custom Function to determine if the vehicle was on the reference position square at the time of the currently rode dictionnary.
+ * @Desc Custom BeepBeep function to determine if the vehicle was on the reference position square at the time of the currently rode dictionnary.
  *
- * @Param (int) X reference position value
- * @Param2 (int) Y reference position value
- * @Param3  (int) X position to compare
- * @Param4  (int) Y position to compare
+ * @Param (int) inputs[0]: X reference position value
+ * @Param (int) inputs[1]: Y reference position value
+ * @Param  (int) inputs[2]: X position to compare
+ * @Param  (int) inputs[3]: Y position to compare
  *
- * @Return (bool) true or false depending if the vehicule was on the reference position or not
+ * @Return True or false depending if the vehicule was on the reference position or not.
  */
 public class PositionCheck extends Function {
     @Override

@@ -38,7 +38,7 @@ public class GForce {
          *
          * @Param string The file path to specify where to write the result.
          *
-         * @Param2 double The interval time wich each data acquisition is performed (in seconds).
+         * @Param double The interval time wich each data acquisition is performed (in seconds).
          */
         double dataAquisitionInterval=0;
         Scanner userInput=new Scanner(System.in);
@@ -176,7 +176,7 @@ public class GForce {
             time+=dataAquisitionInterval;
 
         }
-
+        //Print result
         System.out.println("X GForce max: "+decimalFormat.format(gxMaxValue));
         System.out.println("X GForce min: "+decimalFormat.format(gxMinValue));
         System.out.println("Y GForce max: "+decimalFormat.format(gyMaxValue));

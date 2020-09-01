@@ -18,7 +18,7 @@ public class MaxSpeed {
 /**
  * @Desc Program to get maximum speed from a BeamNG data aquisition.
  *
- * @Param string resultFilePath(optional)   The file path to specify where to write de result.
+ * @Param string resultFilePath(optional):   The file path to specify where to write de result.
  */
     public static void main(String[] args) throws IOException {
 

@@ -1,0 +1,1 @@
+Number of data aquisitions on (0 , 0): 10,000

@@ -2,7 +2,12 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
 
 
 /**
- * Custom binary function to calculate the arctangent of the rapport between the opposite and adjacent side of the angle.
+ * @Desc Custom BeepBeep's binary function to calculate the arctangent of the rapport between the opposite and adjacent side of the angle.
+ *
+ * @Param number: the opposite side
+ * @Param number2: the adjacent side
+ *
+ * @Return Number the angle value resulting of the arctan operation.
  */
 public  class ArcTangent extends BinaryFunction<Number,Number,Number> {
     protected ArcTangent() {

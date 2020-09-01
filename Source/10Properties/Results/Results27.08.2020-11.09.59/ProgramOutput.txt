@@ -1,0 +1,29 @@
+Static Scenario
+	Enter in seconds the time lenght of the data aquistion period:30
+	Enter the number of the data aquisition per second:10
+	Enter the X position to check: 0
+	Enter the Y position to check: 0
+
+Straight Foward
+	Enter in seconds the time lenght of the data aquistion period:30
+	Enter the number of the data aquisition per second:10
+	Enter the X position to check: 100
+	Enter the Y position to check: 0
+
+Wall Crash
+	Enter in seconds the time lenght of the data aquistion period:20
+	Enter the number of the data aquisition per second:10
+	Enter the X position to check: 415
+	Enter the Y position to check: 0
+
+Donut
+	Enter in seconds the time lenght of the data aquistion period:30
+	Enter the number of the data aquisition per second:10
+	Enter the X position to check: 24
+	Enter the Y position to check: 5
+
+Square Road
+	Enter in seconds the time lenght of the data aquistion period:60
+	Enter the number of the data aquisition per second:10
+	Enter the X position to check: -20
+	Enter the Y position to check: 37

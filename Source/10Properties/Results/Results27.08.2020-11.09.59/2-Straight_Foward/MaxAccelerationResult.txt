@@ -1,0 +1,2 @@
+Maximum X acceleration: 637,128
+Maximum Y acceleration: 743,742

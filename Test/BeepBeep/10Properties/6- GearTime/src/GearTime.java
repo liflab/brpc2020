@@ -36,10 +36,10 @@ public class GearTime {
         // Set up an array, containing the time spent into each gear.
 
         Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0};
-
+		
         // Open up the dictionnary
 
-        InputStream is=GearTime.class.getResourceAsStream("dictionnary2.txt");
+        InputStream is=GearTime.class.getResourceAsStream("data.txt");
         ReadLines reader= new ReadLines(is);
 
         // Set up the BeepBeep Modules for data collection
@@ -85,7 +85,7 @@ public class GearTime {
             try {
                 DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
 
-                FileWriter resultWriter = new FileWriter(args[0] + "data.txt");
+                FileWriter resultWriter = new FileWriter(args[0] + "GearTimeResults.txt");
 
                 resultWriter.write("Gear0: " + decimalFormat.format(gearTime[0]) + " s"+"\n"
                                     +"Gear1: " + decimalFormat.format(gearTime[1]) + " s"+"\n"

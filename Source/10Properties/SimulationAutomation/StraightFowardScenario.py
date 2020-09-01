@@ -7,8 +7,7 @@ from BeamHome import getBeamngDirectory
 #
 #Note: None.
 #
-#Arguments
-#Argument1: testName: The name of the scenario the player will see when the game will start.
+#Argument: testName: The name of the scenario the player will see when the game will start.
 #
 #Return: scenarioDict: a dictionnary who contains the required objects to compile the scenario and run it trough BeamNG.
 

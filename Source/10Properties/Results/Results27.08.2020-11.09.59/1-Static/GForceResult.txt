@@ -1,0 +1,6 @@
+X GForce max: ,015
+X GForce min: -,016
+Y GForce max: ,036
+Y GForce min: -,139
+Z GForce max: ,000
+Z GForce min: -9,712
