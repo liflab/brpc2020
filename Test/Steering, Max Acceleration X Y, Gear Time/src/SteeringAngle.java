@@ -8,7 +8,6 @@ import ca.uqac.lif.cep.tmf.QueueSource;
 import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.json.JsonElement;
 import ca.uqac.lif.json.JsonMap;
-import javafx.scene.shape.Arc;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -23,7 +22,7 @@ import java.util.Scanner;
 
 public class SteeringAngle {
 
-    public static double getSteering(JsonMap dict) {
+    public static double getSteering(JsonMap dict) { // Returns steering angle from the BeamNG Dictionnary
         JsonMap subDict = getSubDict(dict, "data");
         subDict = getSubDict(subDict, "position and direction");
         subDict = getSubDict(subDict,"direction");
@@ -33,14 +32,14 @@ public class SteeringAngle {
         return angle;
     }
 
-    public static void SteeringAngle()
+    public static void SteeringAngle()  //
     {
-        InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt");
+        InputStream is=MaxAcceleration.class.getResourceAsStream("dictionnary2.txt"); // Open the dictionnary for reading
         ReadLines reader=new ReadLines(is);
         Pullable rp=reader.getPullableOutput();
         while (rp.hasNext()) {
-            String dictionnary = String.valueOf(rp.pull()); // read la prochaine ligne du dictionnaire aka toute l'esti de frame data
-            Object[] out = new Object[1];   // créer un nouveau object JSON a évaluer or something
+            String dictionnary = String.valueOf(rp.pull()); // Read the dictionnary's next line
+            Object[] out = new Object[1];
             ParseJson.instance.evaluate(new Object[]{dictionnary}, out);
             JsonElement j = (JsonElement) out[0];
             JsonMap jMap = (JsonMap) j;

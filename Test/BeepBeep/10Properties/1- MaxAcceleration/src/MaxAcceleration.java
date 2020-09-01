@@ -24,12 +24,18 @@ import java.time.format.DateTimeFormatter;
 import java.util.Queue;
 import java.util.Scanner;
 
-
-
-
+/************************************************
+ * @Description: Returns the Maximum Acceleration in both the X and Y Axis of the simulated vehicle.
+ *
+ * @Input: BeamNGpy Dictionary.
+ *
+ * @Output: Writes the results in two separate lines 'Max X and Max Y'
+ ***********************************************/
 
 
 public class MaxAcceleration {
+
+    // Separates the X and Y component of the speed using the angle
 
     public static double getSpeedX(double speed, double angle) {
 
@@ -42,6 +48,8 @@ public class MaxAcceleration {
         double speedy = speed * Math.sin(angle);
         return speedy;
     }
+
+    // Converts the time from a Hour:Minute:Seconds.Milliseconds format to a numeral value in Milliseconds
 
     public static double convertTime(String timeString) {
         timeString = timeString.replaceAll("\"", "");
@@ -60,6 +68,7 @@ public class MaxAcceleration {
         InputStream is = MaxAcceleration.class.getResourceAsStream("data.txt");
         ReadLines reader = new ReadLines(is);
 
+        // Beep Beep piping
 
         ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
         ApplyFunction jpfData = new ApplyFunction(new JPathFunction("data"));
@@ -140,7 +149,7 @@ public class MaxAcceleration {
             angle1 = ((Number) pAngle.pull()).doubleValue();
             speed1 = ((Number) pSpeed.pull()).doubleValue();
 
-            // Calculations
+            // Calculations to get the acceleration on both axis
 
             speedx1 = getSpeedX(speed1.doubleValue(), angle1.doubleValue());
             speedy1 = getSpeedY(speed1.doubleValue(), angle1.doubleValue());
@@ -168,6 +177,7 @@ public class MaxAcceleration {
         System.out.println("Acceleration Y: " + maxAccelerationY);
 
         if (args.length == 1) {
+
             //Write result
 
             try {

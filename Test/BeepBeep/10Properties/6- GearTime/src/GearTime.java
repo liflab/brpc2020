@@ -15,6 +15,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.text.DecimalFormat;
 
+/************************************************
+ * @Description: Returns the amount of time spent in each Gear during the testing period.
+ *
+ * @Input: BeamNGpy Dictionary.
+ *
+ * @Output: Writes the results in 6 separate lines from Gear 1 to 6
+ ***********************************************/
+
 public class GearTime {
 
     public static void main(String[] args)
@@ -24,9 +32,17 @@ public class GearTime {
         int currentGear = 0;
         deltatime = 0;
         time0 = 0;
+
+        // Set up an array, containing the time spent into each gear.
+
         Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0};
+
+        // Open up the dictionnary
+
         InputStream is=GearTime.class.getResourceAsStream("dictionnary2.txt");
         ReadLines reader= new ReadLines(is);
+
+        // Set up the BeepBeep Modules for data collection
 
         ApplyFunction parseData = new ApplyFunction(ParseJson.instance);
         ApplyFunction jpfGear = new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("data.transmission.actualGear"))));
@@ -45,6 +61,8 @@ public class GearTime {
         Pullable pTime= jpfTime.getPullableOutput();
         Pullable pGear= jpfGear.getPullableOutput();
 
+        // Grab the gear for each data collected, then send it to to the right array index.
+
         while (pGear.hasNext())
         {
             currentGear = ((Number) pGear.pull()).intValue();
@@ -62,7 +80,7 @@ public class GearTime {
         System.out.println("Gear 5 = " + gearTime[5]/1000 + " s");
 
         if (args.length == 1) {
-            //Write result
+            // Write result
 
             try {
                 DecimalFormat decimalFormat = new DecimalFormat("#.000");//keep three decimal places
@@ -88,6 +106,8 @@ public class GearTime {
 
 
     }
+
+    // Convert the time string into a numeral value represented in Ms
 
     public static double convertTime(String timeString) {
         timeString = timeString.replaceAll("\"", "");
