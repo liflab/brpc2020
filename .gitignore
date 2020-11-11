@@ -5,3 +5,6 @@ __pycache__/
 *.iml
 Source/PythonDataFetcher/beamngDir.txt
 Source/PythonDataFetcher/BeamHome.py
+.classpath
+.project
+*~

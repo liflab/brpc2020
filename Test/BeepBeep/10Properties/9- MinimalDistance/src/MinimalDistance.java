@@ -19,7 +19,7 @@ public class MinimalDistance {
         InputStream is=MinimalDistance.class.getResourceAsStream("dictionnary.txt");
         ReadLines reader=new ReadLines(is);
 
-        QueueSource segmentsSource=new QueueSource().setEvents(new Segment(new Point(1.0, 1.0),new Point(1.0,3.0)),new Segment(1.0,3.0,1.0,5.0));
+        QueueSource segmentsSource=new QueueSource().setEvents(new Segment(new Point(1.0, 1.0),new Point(1.0,3.0)),new Segment(1.0,1.0,3.0,5.0));
         QueueSource segmentsSourceCopy=segmentsSource;
         Pullable pullSegments=segmentsSourceCopy.getPullableOutput();
 

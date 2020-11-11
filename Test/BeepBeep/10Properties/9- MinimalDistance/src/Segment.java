@@ -12,7 +12,7 @@ public class Segment {
 
     }
 
-    public Segment(double x1,double x2,double y1,double y2) {
+    public Segment(double x1,double y1,double x2,double y2) {
         aPoint=new Point(x1,y1);
         bPoint=new Point(x2,y2);
         setLenght(aPoint,bPoint);
