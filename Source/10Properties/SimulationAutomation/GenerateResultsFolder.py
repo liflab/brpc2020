@@ -1,5 +1,4 @@
 import os
-
 from CreateFolder import CreateFolder
 from MoveFolder import MoveFolder
 from get10PropertiesFilePath import get10PropertiesFilePath

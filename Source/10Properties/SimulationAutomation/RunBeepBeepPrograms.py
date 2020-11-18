@@ -31,8 +31,11 @@ def RunBeepBeepPrograms(beepbeepProgramsFilePath, reposRootFilePath, scenarioDat
         elif(x==4):
             xPos = int(input("\tEnter the X position to check: "))
             yPos = int(input("\tEnter the Y position to check: "))
+            xPosStopCheck= int(input("\tEnter the X stop position to check: "))
+            yPosStopCheck=int(input("\tEnter the Y stop position to check: "))
             subprocess.check_output(
-                (commandTemplate + programsName[x] + " " + scenarioDataFilePath + " " + str(xPos) + " " + str(yPos)))
+                (commandTemplate + programsName[x] + " " + scenarioDataFilePath + " " + str(xPos) + " " + str(yPos)+" "+
+                 str(xPosStopCheck)+" "+str(yPosStopCheck)))
         else:
             subprocess.check_output((commandTemplate+programsName[x]+ " " +scenarioDataFilePath))
 

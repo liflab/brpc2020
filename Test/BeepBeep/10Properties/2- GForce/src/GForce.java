@@ -31,6 +31,7 @@ import java.util.Scanner;
 
 public class GForce {
     public static void main(String[] args) {
+
         /**
          * @Desc For each dimension, the program generate a graphic of the car's gforce as a function of time from a BeamNG data aquisition.
          *
@@ -55,6 +56,7 @@ public class GForce {
         {
             throw  new IllegalArgumentException(String.format("\n\tThis program can only be executed with 0 or 3 arguments.\n\targs.length value: %d",args.length));
         }
+        long start=System.nanoTime();
 
         InputStream is= GForce.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
@@ -83,9 +85,9 @@ public class GForce {
         Cumulate zMax=new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
         Cumulate zMin=new Cumulate(new CumulativeFunction<Number>(Numbers.minimum));
 
-        UpdateTable xTable=new UpdateTableStream("time(second)","gforce");
-        UpdateTable yTable=new UpdateTableStream("time(second)","gforce");
-        UpdateTable zTable=new UpdateTableStream("time(second)","gforce");
+        UpdateTable xTable=new UpdateTableStream("time (s)","gforce");
+        UpdateTable yTable=new UpdateTableStream("time (s)","gforce");
+        UpdateTable zTable=new UpdateTableStream("time (s)","gforce");
 
         KeepLast klX=new KeepLast();
         KeepLast klY=new KeepLast();
@@ -189,6 +191,11 @@ public class GForce {
         zPump.run();
 
 
+        long stop=System.nanoTime();
+        double exectime=stop-start;
+        double sexectime=(double)exectime/1_000_000_000.0;
+        System.out.println(sexectime);
+
         if (args.length == 2) {
             //move graphics
             try {
@@ -220,6 +227,7 @@ public class GForce {
                         +"\n"+"Z GForce min: "+decimalFormat.format(gzMinValue));
 
                 resultWriter.close();
+
             }
 
             catch (IOException e) {
