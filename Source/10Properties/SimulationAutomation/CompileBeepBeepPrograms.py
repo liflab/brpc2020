@@ -2,19 +2,15 @@ import os
 from getBeepBeepProgramsFilePath import getBeepBeepProgramsFilePath
 from getRepoRootFilePath import getReposRootFilePath
 
-
-##Program to print the commands requiered to compile the BeepBeep program from the command line.
-reposRoot=getReposRootFilePath()
-filePaths=getBeepBeepProgramsFilePath(getReposRootFilePath())
+#  Program to print the commands requiered to compile the BeepBeep program from the command line.
+reposRoot = getReposRootFilePath()
+filePaths = getBeepBeepProgramsFilePath(getReposRootFilePath())
 programsName = ["MaxSpeed", "CarAngle", "MaxAcceleration", "GForce",
-                "Check", "GearTime", "MinMaxAverageRPM", "SteeringAngle"]
-
+                "Check", "GearTime", "MinMaxAverageRPM", "SteeringAngle", "Heatmap", "MinimalDistance"]
 
 for x in range(len(filePaths)):
     os.chdir(filePaths[x])
-    print("cd " +filePaths[x])
-    print("javac -classpath \""+os.path.join(reposRoot,"beepbeep-3.jar")+";"
-              +os.path.join(reposRoot,"json.jar")+";"+os.path.join(reposRoot,"mtnp.jar")+
-              ";.\" " +programsName[x]+".java")
-
-
+    print("cd " + filePaths[x])
+    print("javac -classpath \"" + os.path.join(reposRoot, "beepbeep-3.jar") + ";"
+          + os.path.join(reposRoot, "json.jar") + ";" + os.path.join(reposRoot, "mtnp.jar") +
+          ";.\" " + programsName[x] + ".java")
