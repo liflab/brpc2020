@@ -2,6 +2,7 @@ from beamngpy import Scenario, Vehicle, BeamNGpy
 from beamngpy.sensors import Electrics, Damage, GForces
 
 from BeamHome import getBeamngDirectory
+from SelectCar import SelectCar
 
 ##Function to get the data required to execute the static scenario.
 #
@@ -15,7 +16,7 @@ def getStaticScenario(testName):
     beamng = BeamNGpy('localhost', 64256, home=getBeamngDirectory())  # This is the host & port used to communicate over
     staticScenario= Scenario('smallgrid', str(testName))
 
-    testVehicle = Vehicle('Test_Vehicule', model='etkc', licence='LIFLAB', colour='Blue')
+    testVehicle = Vehicle('Test_Vehicule', model=SelectCar(), licence='LIFLAB', colour='Blue')
 
     # Create an Electrics sensor and attach it to the vehicle
     electrics = Electrics()
