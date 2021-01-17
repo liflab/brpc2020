@@ -2,6 +2,7 @@ from beamngpy import BeamNGpy, Scenario, Vehicle, StaticObject, Road
 from beamngpy.sensors import Electrics, Damage, GForces
 
 from BeamHome import getBeamngDirectory
+from SelectCar import SelectCar
 
 ##Function to get the data required to execute the donut scenario.
 #
@@ -15,27 +16,27 @@ def getDonutScenario(testName):
     beamng = BeamNGpy('localhost', 64256, home=getBeamngDirectory())  # This is the host & port used to communicate over
     donutScenario = Scenario('smallgrid', str(testName))
 
-    concreteWallSide1=StaticObject(name="Crash_Test_Wall", pos=(20, 10, 0), rot=(0, 0, 0), scale=(10, 1, 1),
+    concreteWallSide1=StaticObject(name="Crash_Test_Wall", pos=(200, 100, 0), rot=(0, 0, 0), scale=(100, 1, 1),
                  shape='/levels/driver_training/art/shapes/race/concrete_road_barrier_a.dae')
 
-    concreteWallSide2 = StaticObject(name="Crash_Test_Wall2", pos=(35, -5, 0), rot=(0, 0, 90), scale=(10, 1, 1),
+    concreteWallSide2 = StaticObject(name="Crash_Test_Wall2", pos=(350, -50, 0), rot=(0, 0, 90), scale=(100, 1, 1),
                                      shape='/levels/driver_training/art/shapes/race/concrete_road_barrier_a.dae')
 
-    concreteWallSide3 = StaticObject(name="Crash_Test_Wall3", pos=(20, -20, 0), rot=(0, 0, 0), scale=(10, 1, 1),
+    concreteWallSide3 = StaticObject(name="Crash_Test_Wall3", pos=(200, -200, 0), rot=(0, 0, 0), scale=(100, 1, 1),
                                      shape='/levels/driver_training/art/shapes/race/concrete_road_barrier_a.dae')
 
-    concreteWallSide4 = StaticObject(name="Crash_Test_Wall4", pos=(5, -5, 0), rot=(0, 0,90 ), scale=(10, 1, 1),
+    concreteWallSide4 = StaticObject(name="Crash_Test_Wall4", pos=(50, -50, 0), rot=(0, 0,90 ), scale=(100, 1, 1),
                                      shape='/levels/driver_training/art/shapes/race/concrete_road_barrier_a.dae')
 
     testRoad = Road('track_editor_C_center', rid='Test_Road')
-    roadNode = [(-25, 25, 0, 45), (15,25 , 0, 45)]
+    roadNode = [(-250, 250, 0, 450), (150,250 , 0, 450)]
     testRoad.nodes.extend(roadNode)
 
 
 
 
 
-    testVehicle = Vehicle('Test_Vehicule', model='etkc', licence='LIFLAB', colour='Blue')
+    testVehicle = Vehicle('Test_Vehicule', model=SelectCar(), licence='LIFLAB', colour='Blue')
 
     # Create an Electrics sensor and attach it to the vehicle
     electrics = Electrics()
@@ -50,7 +51,7 @@ def getDonutScenario(testName):
     testVehicle.attach_sensor('GForces', gForce)
 
 
-    donutScenario.add_vehicle(testVehicle, pos=(20, 0, 0), rot=(0, 0, 0))
+    donutScenario.add_vehicle(testVehicle, pos=(200, 0, 0), rot=(0, 0, 0))
 
     donutScenario.add_object(concreteWallSide1)
     donutScenario.add_object(concreteWallSide2)
