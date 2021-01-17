@@ -1,6 +1,6 @@
 from beamngpy import BeamNGpy, Scenario, Road, Vehicle
 from beamngpy.sensors import Electrics, Damage, GForces
-
+from SelectCar import SelectCar
 from BeamHome import getBeamngDirectory
 
 ##Function to get the data required to execute the straight foward scenario.
@@ -22,7 +22,7 @@ def getStraightFowardScenario(testName):
     roadNode=[(-2,0,0,7),(2000,0,0,7)]
     testRoad.nodes.extend(roadNode)
 
-    testVehicle = Vehicle('Test_Vehicule', model='etkc', licence='LIFLAB', colour='Blue')
+    testVehicle = Vehicle('Test_Vehicule', model=SelectCar(), licence='LIFLAB', colour='Blue')
 
 
     # Create an Electrics sensor and attach it to the vehicle
