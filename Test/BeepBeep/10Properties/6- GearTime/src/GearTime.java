@@ -35,7 +35,7 @@ public class GearTime {
 
         // Set up an array, containing the time spent into each gear.
 
-        Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0};
+        Double gearTime[] = new Double[]{0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0};
 		
         // Open up the dictionnary
 
@@ -65,19 +65,31 @@ public class GearTime {
 
         while (pGear.hasNext())
         {
-            currentGear = ((Number) pGear.pull()).intValue();
+            currentGear = ((Number) pGear.pull()).intValue()+1;
             time1 = convertTime(pTime.pull().toString());
             deltatime = time1.doubleValue() - time0.doubleValue();
             gearTime[currentGear] = gearTime[currentGear] + deltatime;
             time0 = time1;
         }
 
-        System.out.println("Gear 0 = " + gearTime[0]/1000 + " s");
-        System.out.println("Gear 1 = " + gearTime[1]/1000 + " s");
-        System.out.println("Gear 2 = " + gearTime[2]/1000 + " s");
-        System.out.println("Gear 3 = " + gearTime[3]/1000 + " s");
-        System.out.println("Gear 4 = " + gearTime[4]/1000 + " s");
-        System.out.println("Gear 5 = " + gearTime[5]/1000 + " s");
+        System.out.println("Gear -1 = " + gearTime[0]/1000 + " s");
+        System.out.println("Gear 0 = " + gearTime[1]/1000 + " s");
+        System.out.println("Gear 1 = " + gearTime[2]/1000 + " s");
+        System.out.println("Gear 2 = " + gearTime[3]/1000 + " s");
+        System.out.println("Gear 3 = " + gearTime[4]/1000 + " s");
+        System.out.println("Gear 4 = " + gearTime[5]/1000 + " s");
+        System.out.println("Gear 5 = " + gearTime[6]/1000 + " s");
+        System.out.println("Gear 6 = " + gearTime[7]/1000 + " s");
+        System.out.println("Gear 7 = " + gearTime[8]/1000 + " s");
+        System.out.println("Gear 8 = " + gearTime[9]/1000 + " s");
+        System.out.println("Gear 9 = " + gearTime[10]/1000 + " s");
+        System.out.println("Gear 10 = " + gearTime[11]/1000 + " s");
+        System.out.println("Gear 11 = " + gearTime[12]/1000 + " s");
+        System.out.println("Gear 12 = " + gearTime[13]/1000 + " s");
+        System.out.println("Gear 13 = " + gearTime[14]/1000 + " s");
+        System.out.println("Gear 14 = " + gearTime[15]/1000 + " s");
+        System.out.println("Gear 15 = " + gearTime[16]/1000 + " s");
+
 
         if (args.length == 1) {
             // Write result
@@ -87,12 +99,23 @@ public class GearTime {
 
                 FileWriter resultWriter = new FileWriter(args[0] + "GearTimeResults.txt");
 
-                resultWriter.write("Gear0: " + decimalFormat.format(gearTime[0]) + " s"+"\n"
-                                    +"Gear1: " + decimalFormat.format(gearTime[1]) + " s"+"\n"
-                                    +"Gear2: "+ decimalFormat.format(gearTime[2]) + " s"+"\n"
-                                    +"Gear3: "+ decimalFormat.format(gearTime[3]) + " s"+"\n"
-                                    +"Gear4: "+ decimalFormat.format(gearTime[4]) + " s"+"\n"
-                                    +"Gear5: "+ decimalFormat.format(gearTime[5]) + " s");
+                resultWriter.write("Gear -1: " + decimalFormat.format(gearTime[0]/1000) + " s"+"\n"
+                                    +"Gear0: " + decimalFormat.format(gearTime[1]/1000) + " s"+"\n"
+                                    +"Gear1: " + decimalFormat.format(gearTime[2]/1000) + " s"+"\n"
+                                    +"Gear2: "+ decimalFormat.format(gearTime[3]/1000) + " s"+"\n"
+                                    +"Gear3: "+ decimalFormat.format(gearTime[4]/1000) + " s"+"\n"
+                                    +"Gear4: "+ decimalFormat.format(gearTime[5]/1000) + " s"+"\n"
+                                    +"Gear5: "+ decimalFormat.format(gearTime[6]/1000) + " s"+"\n"
+                                    +"Gear6: "+ decimalFormat.format(gearTime[7]/1000) + " s"+"\n"
+                                    +"Gear7: "+ decimalFormat.format(gearTime[8]/1000) + " s"+"\n"
+                                    +"Gear8: "+ decimalFormat.format(gearTime[9]/1000) + " s"+"\n"
+                                    +"Gear9: "+ decimalFormat.format(gearTime[10]/1000) + " s"+"\n"
+                                    +"Gear10: "+ decimalFormat.format(gearTime[11]/1000) + " s"+"\n"
+                                    +"Gear11: "+ decimalFormat.format(gearTime[12]/1000) + " s"+"\n"
+                                    +"Gear12: "+ decimalFormat.format(gearTime[13]/1000) + " s"+"\n"
+                                    +"Gear13: "+ decimalFormat.format(gearTime[14]/1000) + " s"+"\n"
+                                    +"Gear14: "+ decimalFormat.format(gearTime[15]/1000) + " s"+"\n"
+                                    +"Gear15: "+ decimalFormat.format(gearTime[16]/1000) + " s");
 
                 resultWriter.close();
             }
