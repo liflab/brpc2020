@@ -1,9 +1,6 @@
 import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
-import ca.uqac.lif.cep.functions.ApplyFunction;
-import ca.uqac.lif.cep.functions.Cumulate;
-import ca.uqac.lif.cep.functions.CumulativeFunction;
-import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.functions.*;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.io.WriteToFile;
 import ca.uqac.lif.cep.json.JPathFunction;
@@ -29,6 +26,8 @@ import java.nio.file.Paths;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
+import static ca.uqac.lif.cep.Connector.connect;
+
 public class GForce {
     public static void main(String[] args) {
 
@@ -38,24 +37,9 @@ public class GForce {
          * @Note The program can be also executed in the IDE without parameters.
          *
          * @Param string The file path to specify where to write the result.
-         *
-         * @Param double The interval time wich each data acquisition is performed (in seconds).
+
          */
-        double dataAquisitionInterval=0;
-        Scanner userInput=new Scanner(System.in);
-        if(args.length==2)//if the program is executed with parameters
-        {
-            dataAquisitionInterval=Double.parseDouble(args[1].trim());
-        }
-        else if (args.length==0)
-        {//if the program is executed without parameters from the ide
-            System.out.print("Enter the interval time wich each data acquisition is performed (in seconds): ");
-            dataAquisitionInterval=userInput.nextDouble();
-        }
-        else
-        {
-            throw  new IllegalArgumentException(String.format("\n\tThis program can only be executed with 0 or 3 arguments.\n\targs.length value: %d",args.length));
-        }
+
         long start=System.nanoTime();
 
         InputStream is= GForce.class.getResourceAsStream("data.txt");
@@ -66,7 +50,10 @@ public class GForce {
 
 
         ApplyFunction parseData=new ApplyFunction(ParseJson.instance);
+        Fork baseDictFork= new Fork(2);
+        connect(parseData,baseDictFork);
         ApplyFunction jpfGForceData=new ApplyFunction(new JPathFunction("data.gforce"));
+        connect(baseDictFork,0,jpfGForceData,0);
 
         Fork gForceFork=new Fork(3);
         Fork gxFork=new Fork(3);
@@ -77,6 +64,12 @@ public class GForce {
         ApplyFunction jpfGX=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("gx"))));
         ApplyFunction jpfGY=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("gy"))));
         ApplyFunction jpfGZ=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("gz"))));
+
+
+        ApplyFunction timeData=new ApplyFunction(new JPathFunction("time"));
+        ApplyFunction time=new ApplyFunction(new FunctionTree(new getTime(), StreamVariable.X));
+        connect(baseDictFork,1,timeData,0);
+        connect(timeData,time);
 
         Cumulate xMax=new Cumulate(new CumulativeFunction<Number>(Numbers.maximum));
         Cumulate xMin=new Cumulate(new CumulativeFunction<Number>(Numbers.minimum));
@@ -106,49 +99,49 @@ public class GForce {
         Pump yPump=new Pump();
         Pump zPump=new Pump();
 
-        Connector.connect(read,parseData);
-        Connector.connect(parseData,jpfGForceData);
-        Connector.connect(jpfGForceData,gForceFork);
-        Connector.connect(gForceFork,0,jpfGX,0);
-        Connector.connect(gForceFork,1,jpfGY,0);
-        Connector.connect(gForceFork,2,jpfGZ,0);
-        Connector.connect(jpfGX,gxFork);
-        Connector.connect(jpfGY,gyFork);
-        Connector.connect(jpfGZ,gzFork);
-        Connector.connect(gxFork,0,xMin,0);
-        Connector.connect(gxFork,1,xMax,0);
-        Connector.connect(gyFork,0,yMin,0);
-        Connector.connect(gyFork,1,yMax,0);
-        Connector.connect(gzFork,0,zMin,0);
-        Connector.connect(gzFork,1,zMax,0);
+        connect(read,parseData);
+        connect(parseData,jpfGForceData);
+        connect(jpfGForceData,gForceFork);
+        connect(gForceFork,0,jpfGX,0);
+        connect(gForceFork,1,jpfGY,0);
+        connect(gForceFork,2,jpfGZ,0);
+        connect(jpfGX,gxFork);
+        connect(jpfGY,gyFork);
+        connect(jpfGZ,gzFork);
+        connect(gxFork,0,xMin,0);
+        connect(gxFork,1,xMax,0);
+        connect(gyFork,0,yMin,0);
+        connect(gyFork,1,yMax,0);
+        connect(gzFork,0,zMin,0);
+        connect(gzFork,1,zMax,0);
 
-        Connector.connect(tableXAxis,tableXAxisFork);
+        connect(tableXAxis,tableXAxisFork);
 
-        Connector.connect(tableXAxisFork,0,xTable,0);
-        Connector.connect(gxFork,2,xTable,1);
-        Connector.connect(xTable,klX);
-        Connector.connect(klX,xDraw);
-        Connector.connect(klX,xWrite);
-        Connector.connect(xPump,xWrite);
-        Connector.connect(xDraw,xPump);
+        connect(tableXAxisFork,0,xTable,0);
+        connect(gxFork,2,xTable,1);
+        connect(xTable,klX);
+        connect(klX,xDraw);
+        connect(klX,xWrite);
+        connect(xPump,xWrite);
+        connect(xDraw,xPump);
 
-        Connector.connect(tableXAxisFork,1,yTable,0);
-        Connector.connect(gyFork,2,yTable,1);
-        Connector.connect(yTable,klY);
-        Connector.connect(klY,yDraw);
-        Connector.connect(klY,yWrite);
-        Connector.connect(yPump,yWrite);
-        Connector.connect(yDraw,yPump);
+        connect(tableXAxisFork,1,yTable,0);
+        connect(gyFork,2,yTable,1);
+        connect(yTable,klY);
+        connect(klY,yDraw);
+        connect(klY,yWrite);
+        connect(yPump,yWrite);
+        connect(yDraw,yPump);
 
-        Connector.connect(tableXAxisFork,2,zTable,0);
-        Connector.connect(gzFork,2,zTable,1);
-        Connector.connect(zTable,klZ);
-        Connector.connect(klZ,zDraw);
-        Connector.connect(klZ,zWrite);
-        Connector.connect(zPump,zWrite);
-        Connector.connect(zDraw,zPump);
+        connect(tableXAxisFork,2,zTable,0);
+        connect(gzFork,2,zTable,1);
+        connect(zTable,klZ);
+        connect(klZ,zDraw);
+        connect(klZ,zWrite);
+        connect(zPump,zWrite);
+        connect(zDraw,zPump);
 
-        double time=0;
+
         double gxMaxValue=0;
         double gxMinValue=0;
         double gyMaxValue=0;
@@ -162,8 +155,11 @@ public class GForce {
         Pullable yMinPull=yMin.getPullableOutput();
         Pullable zMaxPull=zMax.getPullableOutput();
         Pullable zMinPull=zMin.getPullableOutput();
+        Pullable timeP=time.getPullableOutput();
 
         DecimalFormat decimalFormat=new DecimalFormat("#.000");
+
+
 
         while(xMaxPull.hasNext()){
 
@@ -174,8 +170,8 @@ public class GForce {
             gzMaxValue=((Number) zMaxPull.pull()).doubleValue();
             gzMinValue=((Number) zMinPull.pull()).doubleValue();
 
-            tableXAxis.addEvent(time);
-            time+=dataAquisitionInterval;
+            tableXAxis.addEvent(timeP.pull());
+
 
         }
         //Print result
@@ -196,7 +192,7 @@ public class GForce {
         double sexectime=(double)exectime/1_000_000_000.0;
         System.out.println(sexectime);
 
-        if (args.length == 2) {
+        if (args.length == 1) {
             //move graphics
             try {
                 Path moveFile = Files.move(Paths.get("xGForce.png"),
