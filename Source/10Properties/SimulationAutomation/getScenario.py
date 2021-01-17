@@ -14,7 +14,6 @@ from WallCrashScenario import getWallCrashScenario
 #Return: scenarioDict: the dictionnary with the data of the scenario
 def getScenario(scenarioNo):
     scenarioNo=int(scenarioNo)
-    testName=None
     scenarioDict=None
 
 
