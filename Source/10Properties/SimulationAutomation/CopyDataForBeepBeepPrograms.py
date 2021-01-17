@@ -27,16 +27,23 @@ def CopyDataForBeepBeepPrograms(dataFilePath,repoRootFilePath):
                                                                                         "10Properties","2- GForce","src","data.txt"))
 
     CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
+                                                                                                       "10Properties", "3- Heatmap", "src",
+                                                                                                       "data.txt"))
+
+    CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
                                                                                         "10Properties","4- PositionCheck","src","data.txt"))
 
     CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
                                                                                         "10Properties","6- GearTime","src","data.txt"))
 
     CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
-                                                                                        "10Properties","2- GForce","src","data.txt"))
+                                                                                       "10Properties","2- GForce","src","data.txt"))
 
     CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
                                                                                         "10Properties","7- RPM","src","data.txt"))
 
     CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
                                                                                         "10Properties","8- SteeringAngle","src","data.txt"))
+
+    CopyDataFile(originalDataFilePath=dataFilePath,destinationDataFilePath=os.path.join(repoRootFilePath,"Test","BeepBeep",
+                                                                                                       "10Properties","9- MinimalDistance","src", "data.txt"))
