@@ -2,6 +2,7 @@ import ca.uqac.lif.cep.Connector;
 import ca.uqac.lif.cep.Pullable;
 import ca.uqac.lif.cep.functions.ApplyFunction;
 import ca.uqac.lif.cep.functions.FunctionTree;
+import ca.uqac.lif.cep.functions.StreamVariable;
 import ca.uqac.lif.cep.io.ReadLines;
 import ca.uqac.lif.cep.io.WriteToFile;
 import ca.uqac.lif.cep.json.JPathFunction;
@@ -27,6 +28,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
+import static ca.uqac.lif.cep.Connector.connect;
+
 public class CarAngle {
 
     /**
@@ -35,39 +38,18 @@ public class CarAngle {
      * @Note The program can be also executed in the IDE without parameters.
      *
      * @Param string The file path to specify where to write the result.
-     * @Param double The interval time wich each data acquisition is performed (in seconds).
-     * @Param double The time length of the data acquistion period (in seconds).
+
      */
     public static void main(String[] args) {
-        double dataAquisitionInterval=0;
-        double aquisitionTimePeriod=0;
-        Scanner userInput= new Scanner(System.in);
 
-        if(args.length==3)//if the program is executed with parameters
-        {
-            dataAquisitionInterval=Double.parseDouble(args[1].trim());
-            aquisitionTimePeriod=Double.parseDouble(args[2].trim());
-        }
-        else if (args.length==0)
-        {//if the program is executed without parameters from the ide
-            System.out.print("Enter the interval time wich each data acquisition is performed (in seconds): ");
-            dataAquisitionInterval=userInput.nextDouble();
-            System.out.print("Enter the time length of the data acquistion period (in seconds): ");
-            aquisitionTimePeriod=userInput.nextDouble();
-        }
-        else
-        {
-            throw  new IllegalArgumentException(String.format("\n\tThis program can only be executed with 0 or 3 arguments.\n\targs.length value: %d",args.length));
-        }
 
 
         InputStream is=CarAngle.class.getResourceAsStream("data.txt");
         ReadLines reader=new ReadLines(is);
-        Pullable rp=reader.getPullableOutput();
-
 
 
         ApplyFunction parseData=new ApplyFunction(ParseJson.instance);
+        Fork parseDataFork= new Fork(2);
         ApplyFunction jpfData=new ApplyFunction(new JPathFunction("data.position and direction.direction"));
         Fork dataFork=new Fork(2);
         Fork angleForkX=new Fork(2);
@@ -79,6 +61,15 @@ public class CarAngle {
         ApplyFunction quadrant=new ApplyFunction(new getQuadrant());
         ApplyFunction adjustment=new ApplyFunction(new QuadrantAjustement());
 
+        //time
+        //Time
+        ApplyFunction timeData= new ApplyFunction(new JPathFunction("time"));
+        ApplyFunction time= new ApplyFunction(new FunctionTree(new getTime(), StreamVariable.X));
+        connect(parseDataFork,1,timeData,0);
+        connect(timeData,time);
+        Pullable timeP=time.getPullableOutput();
+
+
         QueueSource xAxisTableSource=new QueueSource().loop(false);
         KeepLast kl=new KeepLast();
         ApplyFunction arctan=new ApplyFunction(new ArcTangent());
@@ -88,47 +79,49 @@ public class CarAngle {
         WriteToFile w =new WriteToFile("CarAngleResult.png");
         Pump pump=new Pump();
 
-        Connector.connect(reader,parseData);
-        Connector.connect(parseData,jpfData);
-        Connector.connect(jpfData,dataFork);
-        Connector.connect(dataFork,0,jpfX,0);
-        Connector.connect(dataFork,1,jpfY,0);
-        Connector.connect(jpfX,angleForkX);
-        Connector.connect(jpfY,angleForkY);
+        connect(reader,parseData);
+        connect(parseData,parseDataFork);
+        connect(parseDataFork,0,jpfData,0);
+        connect(jpfData,dataFork);
+        connect(dataFork,0,jpfX,0);
+        connect(dataFork,1,jpfY,0);
+        connect(jpfX,angleForkX);
+        connect(jpfY,angleForkY);
 
-        Connector.connect(angleForkX,1,absoluteX,0);
-        Connector.connect(angleForkY,1,absoluteY,0);
-        Connector.connect(absoluteX,0,arctan,0);
-        Connector.connect(absoluteY,0,arctan,1);
-        Connector.connect(angleForkX,0,quadrant,0);
-        Connector.connect(angleForkY,0,quadrant,1);
-        Connector.connect(quadrant,0,adjustment,0);
-        Connector.connect(arctan,0,adjustment,1);
-
-
-        Connector.connect(xAxisTableSource,0,angleTable,0);
-        Connector.connect(adjustment,0,angleTable,1);
-        Connector.connect(angleTable,kl);
-        Connector.connect(kl,draw);
-        Connector.connect(kl,w);
-        Connector.connect(pump,w);
-        Connector.connect(draw,pump);
+        connect(angleForkX,1,absoluteX,0);
+        connect(angleForkY,1,absoluteY,0);
+        connect(absoluteX,0,arctan,0);
+        connect(absoluteY,0,arctan,1);
+        connect(angleForkX,0,quadrant,0);
+        connect(angleForkY,0,quadrant,1);
+        connect(quadrant,0,adjustment,0);
+        connect(arctan,0,adjustment,1);
 
 
+        connect(xAxisTableSource,0,angleTable,0);
+        connect(adjustment,0,angleTable,1);
+        connect(angleTable,kl);
+        connect(kl,draw);
+        connect(kl,w);
+        connect(pump,w);
+        connect(draw,pump);
 
 
 
-        double time=0;
 
-        while(time<(aquisitionTimePeriod+dataAquisitionInterval)){
 
-            xAxisTableSource.addEvent(time);
-            time=time+dataAquisitionInterval;
+
+
+        while(timeP.hasNext()){
+
+            xAxisTableSource.addEvent(timeP.pull());
+
 
 
         }
         pump.run();
-        if(args.length==3){
+
+        if(args.length==1){
             //Write result
 
             try {
