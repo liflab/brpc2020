@@ -68,9 +68,14 @@ class VehicleData:
     #
     # Return: brakes: A dictionnary containing the vehicle's brakes data.
     def __setBrakes(self,electricSensorData):
-        brakes = {'brakePedalIntensity': electricSensorData['brake'],
+        try:
+            brakes = {'brakePedalIntensity': electricSensorData['brake'],
                   'parkingBrakeInput': electricSensorData['parkingbrake_input'],
                   'esc': electricSensorData['esc']}
+        except:
+            brakes = {'brakePedalIntensity': electricSensorData['brake'],
+                  'parkingBrakeInput': electricSensorData['parkingbrake_input'],
+                  'esc': 0}
         return brakes
 
 
