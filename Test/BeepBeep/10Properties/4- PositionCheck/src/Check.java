@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.text.DecimalFormat;
 import java.util.Scanner;
 
+import static ca.uqac.lif.cep.Connector.connect;
+
 public class Check {
     /**
      * @Desc Program to get the number of data aquisitions that the vehicule spent on a 1x1 game unit square.
@@ -34,7 +36,7 @@ public class Check {
         int stopXPosIntput=0;
         int stopYPosIntput=0;
 
-        if (args.length==5){
+        if (args.length>0){
 
             xPosInput=Integer.parseInt(args[1].trim());
             yPosInput=Integer.parseInt(args[2].trim());
@@ -62,7 +64,7 @@ public class Check {
         }
 
 
-        InputStream is= Check.class.getResourceAsStream("dictionnary.txt");
+        InputStream is= Check.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
         Fork readFork=new Fork(2);
 
@@ -80,39 +82,33 @@ public class Check {
         Fork posDataFork=new Fork(2);
         Fork xDataFork=new Fork(2);
         Fork yDataFork=new Fork(2);
-
-
-
-
-        //connect position data forks
-        Connector.connect(read,parseData);
-        Connector.connect(parseData,datafork);
-        Connector.connect(datafork,0,jpfData,0);
-        Connector.connect(jpfData,posDataFork);
-        Connector.connect(posDataFork,0,jpfX,0);
-        Connector.connect(posDataFork,1,jpfY,0);
-        Connector.connect(jpfX,xDataFork);
-        Connector.connect(jpfY,yDataFork);
-
-
+        //parse second data fork to get vehicle speed
+        ApplyFunction speedData=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("data.engine.speed"))));
 
         FunctionTree positionCheck=new FunctionTree(new PositionCheck(),xPosCheck,yPosCheck,StreamVariable.X,StreamVariable.Y);
         FunctionTree stopPositionCheck=new FunctionTree(new PositionCheck(),stopXPosCheck,stopYPosCheck,StreamVariable.X,StreamVariable.Y);
         ApplyFunction positionCheckAF=new ApplyFunction(positionCheck);
         ApplyFunction stopPositionCheckAF=new ApplyFunction(stopPositionCheck);
 
+        //connect position data forks
+        connect(read,parseData);
+        connect(parseData,datafork);
+        connect(datafork,0,jpfData,0);
+        connect(jpfData,posDataFork);
+        connect(posDataFork,0,jpfX,0);
+        connect(posDataFork,1,jpfY,0);
+        connect(jpfX,xDataFork);
+        connect(jpfY,yDataFork);
 
         //Connect positionCheck apply functions
-        Connector.connect(xDataFork,0,positionCheckAF,0);
-        Connector.connect(yDataFork,0,positionCheckAF,1);
-        Connector.connect(xDataFork,1,stopPositionCheckAF,0);
-        Connector.connect(yDataFork,1,stopPositionCheckAF,1);
-
-        //parse second data fork to get vehicle speed
-        ApplyFunction speedData=new ApplyFunction((new FunctionTree(NumberValue.instance, new JPathFunction("data.engine.speed"))));
+        connect(xDataFork,0,positionCheckAF,0);
+        connect(yDataFork,0,positionCheckAF,1);
+        connect(xDataFork,1,stopPositionCheckAF,0);
+        connect(yDataFork,1,stopPositionCheckAF,1);
 
 
-        Connector.connect(datafork,1,speedData,0);
+        connect(datafork,1,speedData,0);
+
 
 
 
@@ -126,6 +122,8 @@ public class Check {
 
 
         while (posCheckPull.hasNext()){
+
+
             speedBuf=((Number) speedDataPull.pull()).doubleValue();
             stopPosCheckBuf=(boolean) stopPosCheckPull.pull();
 
@@ -135,13 +133,13 @@ public class Check {
 
         }
 
-        if(!(Math.round(speedBuf)==0 & stopPosCheckBuf==true)){
+        if((Math.round(speedBuf)==0 && stopPosCheckBuf==true)){
 
-            stopPosCheckBuf=false;
+            stopPosCheckBuf=true;
 
         }
         else{
-            stopPosCheckBuf=true;
+            stopPosCheckBuf=false;
         }
 
 
@@ -151,7 +149,7 @@ public class Check {
         System.out.println(result);
 
         //If the program is executed with parameters
-        if (args.length == 5) {
+        if (args.length > 0) {
             //Write result
 
             try {
