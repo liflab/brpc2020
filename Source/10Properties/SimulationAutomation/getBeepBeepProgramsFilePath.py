@@ -23,6 +23,9 @@ def getBeepBeepProgramsFilePath(reposRootFilePath):
     beepbeepProgramsFilePath.append(os.path.join(filepath,"6- GearTime", "src"))
     beepbeepProgramsFilePath.append( os.path.join(filepath,"7- RPM", "src"))
     beepbeepProgramsFilePath.append(os.path.join(filepath,"8- SteeringAngle", "src"))
+    beepbeepProgramsFilePath.append(os.path.join(filepath, "3- Heatmap", "src"))
+    beepbeepProgramsFilePath.append(os.path.join(filepath, "9- MinimalDistance", "src"))
+
 
 
     return beepbeepProgramsFilePath
