@@ -21,12 +21,19 @@ import ca.uqac.lif.cep.util.Numbers;
 import ca.uqac.lif.mtnp.table.FrequencyTable;
 import ca.uqac.lif.mtnp.plot.gnuplot.HeatMap;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Heatmap {
 
 
     public static void main(String[] args) {
+
+
         //To read the file
         InputStream is= Heatmap.class.getResourceAsStream("data.txt");
         ReadLines read=new ReadLines(is);
@@ -46,7 +53,7 @@ public class Heatmap {
         ApplyFunction floorX=new ApplyFunction(new Floor());
         ApplyFunction floorY=new ApplyFunction(new Floor());
 
-        UpdateTable table= new UpdateTableStream(new FrequencyTable(-1,450,10,-1,450,10,1d),"x","y");
+        UpdateTable table= new UpdateTableStream(new FrequencyTable(-1000,1000,100,-1000,1000,100,1d),"x","y");
 
 
         Connector.connect(read,parseData);
@@ -71,6 +78,7 @@ public class Heatmap {
         HeatMap plot = new HeatMap();
         plot.setTitle("Heatmap");
         DrawPlot draw = new DrawPlot(plot);
+
         WriteToFile w=new WriteToFile("HeatMapResult.png");
         Pump pump=new Pump();
 
@@ -79,7 +87,16 @@ public class Heatmap {
         Connector.connect(pump,w);
         Connector.connect(draw,pump);
 
-        pump.start();
+        pump.run();
+
+        if(args.length==1){
+            try{
+                Path moveFile= Files.move(Paths.get("HeatMapResult.png"),Paths.get(args[0]+"HeatMapResult.png"));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
 
 
