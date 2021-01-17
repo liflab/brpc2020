@@ -26,24 +26,25 @@ import ca.uqac.lif.cep.json.NumberValue;
  */
 public class VehiclePosition extends FunctionTree
 {
-  /**
-   * A single visible instance of the function.
-   */
-  public static final transient VehiclePosition instance = new VehiclePosition();
-  
-  /**
-   * Creates a new instance of the function.
-   */
-  protected VehiclePosition()
-  {
-    super(CoordinatesToPoint.instance,
-        new FunctionTree(NumberValue.instance, new JPathFunction("data.position and direction.position.x")),
-        new FunctionTree(NumberValue.instance, new JPathFunction("data.position and direction.position.y")));
-  }
-  
-  @Override
-  public VehiclePosition duplicate(boolean with_state)
-  {
-    return this;
-  }
+    /**
+     * A single visible instance of the function.
+     */
+    public static final transient VehiclePosition instance = new VehiclePosition();
+
+    /**
+     * Creates a new instance of the function.
+     */
+    protected VehiclePosition()
+    {
+        super(CoordinatesToPoint.instance,
+                new FunctionTree(NumberValue.instance, new JPathFunction("data.position and direction.position.x")),
+                new FunctionTree(NumberValue.instance, new JPathFunction("data.position and direction.position.y")));
+    }
+
+    @Override
+    public VehiclePosition duplicate(boolean with_state)
+    {
+        return this;
+    }
 }
+
