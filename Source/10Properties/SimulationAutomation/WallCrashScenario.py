@@ -1,5 +1,6 @@
 from beamngpy import BeamNGpy, Scenario, Road, Vehicle, StaticObject
 from beamngpy.sensors import Electrics, Damage, GForces
+from SelectCar import SelectCar
 
 from BeamHome import getBeamngDirectory
 
@@ -26,7 +27,7 @@ def getWallCrashScenario(testName):
 
 
 
-    testVehicle = Vehicle('Test_Vehicule', model='etkc', licence='LIFLAB', colour='Blue')
+    testVehicle = Vehicle('Test_Vehicule', model=SelectCar(), licence='LIFLAB', colour='Blue')
 
     # Create an Electrics sensor and attach it to the vehicle
     electrics = Electrics()
