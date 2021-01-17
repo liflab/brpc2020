@@ -46,7 +46,7 @@ public class PositionCheck extends Function {
         int yToCheck=((Number) objects[3]).intValue();
 
 
-        if((xRef==xToCheck)&(yRef==yToCheck)){
+        if((xRef==xToCheck)&&(yRef==yToCheck)){
             objects1[0]=true;
         }
         else
