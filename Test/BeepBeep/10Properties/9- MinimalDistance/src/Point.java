@@ -22,10 +22,10 @@ public class Point {
     public void setY(double y) {
         this.y = y;
     }
-    
+
     @Override
     public String toString()
     {
-      return x + "," + y;
+        return x + "," + y;
     }
 }
