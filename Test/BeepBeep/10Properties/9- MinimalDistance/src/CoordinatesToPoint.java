@@ -22,22 +22,22 @@ import ca.uqac.lif.cep.functions.BinaryFunction;
  */
 public class CoordinatesToPoint extends BinaryFunction<Number,Number,Point>
 {
-  /**
-   * A single visible instance of the function.
-   */
-  public static CoordinatesToPoint instance = new CoordinatesToPoint();
-  
-  /**
-   * Creates an instance of the function.
-   */
-  protected CoordinatesToPoint()
-  {
-    super(Number.class, Number.class, Point.class);
-  }
-  
-  @Override
-  public Point getValue(Number x, Number y)
-  {
-   return new Point(x.doubleValue(), y.doubleValue());
-  }
+    /**
+     * A single visible instance of the function.
+     */
+    public static CoordinatesToPoint instance = new CoordinatesToPoint();
+
+    /**
+     * Creates an instance of the function.
+     */
+    protected CoordinatesToPoint()
+    {
+        super(Number.class, Number.class, Point.class);
+    }
+
+    @Override
+    public Point getValue(Number x, Number y)
+    {
+        return new Point(x.doubleValue(), y.doubleValue());
+    }
 }
